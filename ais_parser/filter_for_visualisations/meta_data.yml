@@ -1,0 +1,26 @@
+all_files_meta:
+  aishub-data-20200122-00.csv:
+    day: 22
+    month: 1
+    year: 2020
+directories:
+  in_dir_data: ais_data_output.csv
+  in_dir_path: ais_parser/filtered_data_for_visualisations/
+grid_params:
+  grid_len: 0.5
+  max_lat: 50.0
+  max_lon: 141.0
+  min_lat: 25.0
+  min_lon: -127.0
+  num_cols: 536
+options:
+  allow_diag: true
+  append_coords: true
+  bound_lat: true
+  bound_lon: false
+  bound_time: true
+  interp_actions: true
+  limit_rows: true
+  max_rows: 100000
+  min_states: 2
+  prec_coords: 3
