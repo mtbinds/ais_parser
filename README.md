@@ -29,6 +29,7 @@ AIS_PARSER is a software architecture and suite of algorithms for parsing AIS_da
     
 ### Usage
 
+* Add all your AIS files (.csv or .xml) into the direcory (aiscsv)
 * Once in the (ais_parser) main directory :
 
     TERMINAL:
