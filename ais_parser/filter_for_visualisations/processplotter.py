@@ -1,7 +1,5 @@
 """Preprocesses AIS data.
 
-To obtain the needed AIS data, see (and run) ``get_raw.sh``.
-
 Uses information specified in the ``config_file`` to chew through available AIS csv data to generate an output csv file
 with the discretized states, inferred actions, and records metadata for further processing in the ``meta_file``.
 """
@@ -13,7 +11,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
-EXPORT_COMMANDS = [('run', 'Process Ais Data For Ploting on Map.')]
+EXPORT_COMMANDS = [('run', 'Process Ais Data For Plotting on Map.')]
 
 
 def run():
