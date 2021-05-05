@@ -10568,6 +10568,24 @@
       <change beforePath="$PROJECT_DIR$/../Madjid_Taoualit/src/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Madjid_Taoualit/src/index.test.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/algorithms/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/algorithms/aisparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/aisparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/algorithms/imolister.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/imolister.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/algorithms/shipsimporter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/shipsimporter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/cli.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/config_setter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/config_setter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/tools/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aistool.conf" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test-requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_loader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../babel.config.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../resources/sensors_data.json" beforeDir="false" />
@@ -10599,7 +10617,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -10620,16 +10638,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/docs" />
       <recent name="$PROJECT_DIR$/ais_parser" />
       <recent name="$PROJECT_DIR$/ais_parser/tools" />
       <recent name="$PROJECT_DIR$/ais_parser/algorithms" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -11002,6 +11020,11 @@
       <workItem from="1618401562463" duration="9470000" />
       <workItem from="1618571622347" duration="1623000" />
       <workItem from="1619516943499" duration="262000" />
+      <workItem from="1619517262892" duration="406000" />
+      <workItem from="1619701406335" duration="1171000" />
+      <workItem from="1620122013053" duration="641000" />
+      <workItem from="1620217228168" duration="4879000" />
+      <workItem from="1620222301045" duration="3524000" />
     </task>
     <servers />
   </component>
@@ -11025,8 +11048,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ais_parser/cli.py</url>
-          <line>70</line>
+          <line>59</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ais_parser/loader.py</url>
+          <line>128</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

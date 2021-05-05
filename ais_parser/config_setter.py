@@ -1,6 +1,4 @@
-"""Generates a default config file in current folder
 
-"""
 import os
 from configparser import ConfigParser
 
@@ -8,25 +6,6 @@ __author__ = '''Madjid Taoualit'''
 
 
 def gen_default_config(*args):
-    """Generates a default config file in current folder
-
-    This command generates a default configuration file and folder structure
-    in the current folder.
-
-    The folders generated are:
-
-    repositories
-        To hold additional repository code for ais_parser
-    algorithms
-        To hold additional algorithm code for ais_parser
-    filter_for_visualisations
-        To hold additional filter_for_visualisations code for ais_parser
-
-    aiscsv
-        For AIS csv files (required by algorithms/aisparser.py)
-    baddata
-        For AIS import logfiles (required by algorithms/aisparser.py)
-    """
 
     file_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -38,10 +17,10 @@ def gen_default_config(*args):
         os.mkdir(repo_directory)
     default_config.set('globals', 'repos', repo_directory)
 
-    algo_directory = os.path.join(os.getcwd(), 'algorithms')
-    if not os.path.exists(algo_directory):
-        os.mkdir(algo_directory)
-    default_config.set('globals', 'algos', algo_directory)
+    prog_directory = os.path.join(os.getcwd(), 'programs')
+    if not os.path.exists(prog_directory):
+        os.mkdir(prog_directory)
+    default_config.set('globals', 'progs', prog_directory)
 
     filter_for_visualisation_directory = os.path.join(os.getcwd(), 'filter_for_visualisations')
     if not os.path.exists(filter_for_visualisation_directory):
@@ -83,12 +62,12 @@ def gen_default_config(*args):
     default_config.set('aisdb', 'ro_pass', 'test_ais')
     default_config.set('aisdb', 'postgis', 'yes')
 
-    # now write to file
-    with open('../aistool.conf', 'w') as config_file:
+    # écriture dans le fichier
+    with open('../ais_parser.conf', 'w') as config_file:
         default_config.write(config_file)
 
     print("****************************************************")
-    print("aistool.conf has been created in the current working folder")
+    print("ais_parser.conf has been created in the current working folder")
     print("Please check the settings to ensure they are correct")
     print("....especially postgres database settings")
     print("----------------------------------------------------")

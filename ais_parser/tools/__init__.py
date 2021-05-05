@@ -6,7 +6,7 @@ import time
 import threading
 import psycopg2
 import queue
-from ais_parser.utils import interpolate_passages, valid_imo, detect_location_outliers
+from ais_parser.utils import interpolatepassages, valid_imo, detect_locationoutliers
 
 EXPORT_COMMANDS = [('run', 'Extract a Subset of Clean Ships into ais_extended Tables')]
 INPUTS = []
@@ -193,7 +193,7 @@ def process_interval_series(aisdb, interval):
 
 def insert_message_stream(aisdb, interval, msg_stream):
     """Takes a stream of messages for an MMSI over an interval, runs it through
-    outlier detection and interpolation algorithms, then inserts the resulting
+    outlier detection and interpolation programs, then inserts the resulting
     stream into the ais_extended table."""
     mmsi, imo_number, start, end = interval
 
@@ -205,7 +205,7 @@ def insert_message_stream(aisdb, interval, msg_stream):
     i = 0
     j = 0
 
-    for val in detect_location_outliers(msg_stream):
+    for val in detect_locationoutliers(msg_stream):
 
         if val is False:
 
@@ -219,7 +219,7 @@ def insert_message_stream(aisdb, interval, msg_stream):
             j = j + 1
             k = k+1
 
-    artificial = interpolate_passages(valid)
+    artificial = interpolatepassages(valid)
 
     aisdb.extended.insert_rows_batch(valid + list(artificial))
 

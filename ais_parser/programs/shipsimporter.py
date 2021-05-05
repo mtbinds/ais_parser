@@ -1,12 +1,10 @@
-""" Extracts a subset of clean ships into ais_extended tables
 
-"""
 import logging
 import time
 import threading
 import psycopg2
 import queue
-from ais_parser.utils import interpolate_passages, valid_imo, detect_location_outliers
+from ais_parser.utils import interpolatepassages, valid_imo, detect_locationoutliers
 
 EXPORT_COMMANDS = [('run', 'Extract a Subset of Clean Ships into ais_extended Tables')]
 INPUTS = []
@@ -15,54 +13,32 @@ OUTPUTS = ['aisdb']
 
 def run(inp, out, n_threads=2, dropindices=False):
     aisdb = out['aisdb']
-    valid_imos, imo_mmsi_intervals = filter_good_ships(aisdb)
+    valid_imos, imo_mmsi_intervals = good_ships_filter(aisdb)
     logging.info("Got %d Valid IMO Numbers, Using %d MMSI Numbers", len(valid_imos), len(imo_mmsi_intervals))
 
-    # pre filter intervals
+    # intervalles de pré-filtrage
     def filter_intervals(interval):
-        remain = get_remaining_interval(aisdb, *interval)
+        remain = get_remaininginterval(aisdb, *interval)
         if not remain is None:
             return [interval[0], interval[1], remain[0], remain[1]]
         else:
             return None
 
     filtered_intervals = map(filter_intervals, imo_mmsi_intervals)
-    # sorting intervals by MMSI improves performance on a clustered table
+    # les intervalles de tri par MMSI améliorent les performances sur une table en cluster
     sorted_intervals = sorted(filter(None, filtered_intervals), key=lambda x: x[0])
     logging.info("%d Intervals to Import", len(sorted_intervals))
-    # insert ships into extended table.
+    # insérer les navires dans la table étendue.
     if len(sorted_intervals) > 0:
         if dropindices:
             aisdb.extended.drop_indices()
-        generate_extended_table(aisdb, sorted_intervals, n_threads=n_threads)
+        generate_extendedtable(aisdb, sorted_intervals, n_threads=n_threads)
         if dropindices:
             aisdb.extended.create_indices()
     logging.info("Vessel Importer Done.")
 
 
-def filter_good_ships(aisdb):
-    """Generate a set of imo numbers and (mmsi, imo_number) validity intervals
-
-    Generate a set of imo numbers and (mmsi, imo_number) validity intervals
-    for ships which are deemed to be 'clean'. A clean ship is defined as one which:
-
-     * Has valid MMSI numbers associated with it.
-     * For each MMSI number, the period of time it is associated with this IMO_Number
-       (via message number 5) overlaps with the period the MMSI number was in use.
-     * For each MMSI number, its usage period does not overlap with that of any
-       other of this ship's MMSI numbers.
-     * That none of these MMSI numbers have been used by another ship (i.e.
-       another IMO_Number is also associated with this MMSI)
-
-    Returns
-    =======
-    valid_imos :
-        A set of valid imo_number numbers
-    imo_mmsi_intervals :
-        A list of (mmsi, imo_number, start, end) tuples, describing the validity
-        intervals of each (mmsi, imo_number) pair
-
-    """
+def good_ships_filter(aisdb):
 
     with aisdb.conn.cursor() as cur:
         cur.execute("SELECT distinct imo_number from {}".format(aisdb.imolist.get_name()))
@@ -97,14 +73,14 @@ def filter_good_ships(aisdb):
                 last_end = end
 
             if valid:
-                # check for other users of this mmsi number
+                # vérifier les autres utilisateurs de ce numéro mmsi
                 mmsi_list = [row[0] for row in mmsi_ranges]
                 cur.execute("""select a.mmsi, a.imo_number, b.imo_number
                     from imo_list as a
                     join imo_list as b on a.mmsi = b.mmsi and a.imo_number < b.imo_number
                     where a.mmsi IN ({})""".format(','.join(['%s' for i in mmsi_list])), mmsi_list)
                 if cur.rowcount == 0:
-                    # yay its valid!
+                    # c'est valable!
                     valid_imos.append(imo_number)
                     for mmsi, _, _, start, end in mmsi_ranges:
                         imo_mmsi_intervals.append([mmsi, imo_number, start, end])
@@ -116,11 +92,7 @@ def filter_good_ships(aisdb):
 
 
 def cluster_table(aisdb, table):
-    """Performs a clustering of the postgresql table on the MMSI index.
 
-    This process significantly improves the runtime of extended table generation.
-
-    """
     with aisdb.conn.cursor() as cur:
         index_name = table.name.lower() + "_mmsi_idx"
         logging.info("Clustering Table %s on Index %s. This May Take a While...",
@@ -128,7 +100,7 @@ def cluster_table(aisdb, table):
         cur.execute("CLUSTER {} USING {}".format(table.name, index_name))
 
 
-def generate_extended_table(aisdb, intervals, n_threads=2):
+def generate_extendedtable(aisdb, intervals, n_threads=2):
     logging.info("Inserting %d Squeaky Clean MMSIs", len(intervals))
 
     start = time.time()
@@ -137,7 +109,7 @@ def generate_extended_table(aisdb, intervals, n_threads=2):
     for interval in sorted(intervals, key=lambda x: x[0]):
         interval_q.put(interval)
 
-    pool = [threading.Thread(target=interval_copier, daemon=True, args=(aisdb.options, interval_q)) for i in
+    pool = [threading.Thread(target=interval_copy, daemon=True, args=(aisdb.options, interval_q)) for i in
             range(n_threads)]
     [t.start() for t in pool]
 
@@ -154,58 +126,56 @@ def generate_extended_table(aisdb, intervals, n_threads=2):
     interval_q.join()
 
 
-def interval_copier(db_options, interval_q):
+def interval_copy(db_options, interval_q):
     from ais_parser.repositories import aisdb as db
     aisdb = db.load(db_options)
     logging.debug("Start Interval Copier Task")
     with aisdb:
         while not interval_q.empty():
             interval = interval_q.get()
-            process_interval_series(aisdb, interval)
+            process_intervalseries(aisdb, interval)
             interval_q.task_done()
 
 
-def process_interval_series(aisdb, interval):
+def process_intervalseries(aisdb, interval):
     mmsi, imo_number, start, end = interval
     t_start = time.time()
-    # constrain interval based on previous import
-    remaining_work = get_remaining_interval(aisdb, mmsi, imo_number, start, end)
+    # intervalle de contrainte basé sur l'importation précédente
+    remaining_work = get_remaininginterval(aisdb, mmsi, imo_number, start, end)
     if remaining_work is None:
         # logging.info("Interval was already inserted: (%s, %s, %s, %s)", mmsi, imo, start, end)
         return 0
     else:
         start, end = remaining_work
 
-    # get data for this interval range
+    # obtenir des données pour cette plage d'intervalles
     msg_stream = aisdb.get_message_stream(mmsi, from_ts=start, to_ts=end, use_clean_db=True)
     row_count = len(msg_stream)
     if row_count == 0:
         logging.warning("No Rows to Insert for Interval %s", interval)
         return 0
 
-    insert_message_stream(aisdb, [mmsi, imo_number, start, end], msg_stream)
+    insert_messagestream(aisdb, [mmsi, imo_number, start, end], msg_stream)
 
-    # finished, commit
+    # terminé, validation
     aisdb.conn.commit()
     logging.debug("Inserted %d Rows for MMSI %d. (%fs)", row_count, mmsi, time.time() - t_start)
     return row_count
 
 
-def insert_message_stream(aisdb, interval, msg_stream):
-    """Takes a stream of messages for an MMSI over an interval, runs it through
-    outlier detection and interpolation algorithms, then inserts the resulting
-    stream into the ais_extended table."""
+def insert_messagestream(aisdb, interval, msg_stream):
+
     mmsi, imo_number, start, end = interval
 
     valid = []
     invalid = []
 
-    # call the message filter
+    # appeler le filtre de messages
     k = 0
     i = 0
     j = 0
 
-    for val in detect_location_outliers(msg_stream):
+    for val in detect_locationoutliers(msg_stream):
 
         if val is False:
 
@@ -219,11 +189,11 @@ def insert_message_stream(aisdb, interval, msg_stream):
             j = j + 1
             k = k+1
 
-    artificial = interpolate_passages(valid)
+    artificial = interpolatepassages(valid)
 
-    aisdb.extended.insert_rows_batch(valid + list(artificial))
+    aisdb.extended.insert_rowsbatch(valid + list(artificial))
 
-    # mark the work we've done
+    # marquez le travail que nous avons accompli
     aisdb.action_log.insert_row({'action': "import",
                                  'mmsi': mmsi,
                                  'ts_from': start,
@@ -242,10 +212,10 @@ def insert_message_stream(aisdb, interval, msg_stream):
                                  'ts_to': end,
                                  'count': len(artificial)})
 
-    upsert_interval_to_imolist(aisdb, mmsi, imo_number, start, end)
+    upsert_intervaltoimolist(aisdb, mmsi, imo_number, start, end)
 
 
-def get_remaining_interval(aisdb, mmsi, imo_number, start, end):
+def get_remaininginterval(aisdb, mmsi, imo_number, start, end):
     with aisdb.conn.cursor() as cur:
         try:
             cur.execute(
@@ -266,7 +236,7 @@ def get_remaining_interval(aisdb, mmsi, imo_number, start, end):
             return None
 
 
-def upsert_interval_to_imolist(aisdb, mmsi, imo_number, start, end):
+def upsert_intervaltoimolist(aisdb, mmsi, imo_number, start, end):
     with aisdb.conn.cursor() as cur:
         cur.execute("SELECT COUNT(*) FROM {} WHERE mmsi = %s AND imo_number = %s"
                     .format(aisdb.clean_imolist.name),

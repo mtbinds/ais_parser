@@ -1,10 +1,4 @@
-"""Preprocesses AIS data.
 
-To obtain the needed AIS data, see (and run) ``get_raw.sh``.
-
-Uses information specified in the ``config_file`` to chew through available AIS csv data to generate an output csv file
-with the discretized states, inferred actions, and records metadata for further processing in the ``meta_file``.
-"""
 import math
 import os
 import logging
@@ -17,50 +11,38 @@ EXPORT_COMMANDS = [('run', 'Process Ais Data For Ploting on Map.')]
 
 
 def run():
-    """Driver code to run the big steps of pre-processing the data.
 
-    First, all the script parameters are loaded by reading the ``.yaml`` ``config_file`` and this config is unpacked.
-    All the csv files within a specified directory are found and returned as ``csv_files``, along with each file's
-    year, month, and day in ``all_files_meta``.
-
-    Then, these csv files are read and organized into a large set of trajectories ordered by id (mmsi). Finally, these
-    trajectories are discretized before being written into an output csv containing only rows of id-state-action-state
-    transitions.
-
-    Another yaml file is written to ``meta_file`` to specify the final grid parameters, output directories, and the
-    year, month, and day of all the files read in.
-    """
-    # file containing important options, directories, parameters, etc.
+    # fichier contenant des options importantes, des répertoires, des paramètres, etc.
     config_file = "ais_parser/filter_for_visualisations/config.yml"
 
-    # file to write final grid_params and the csv files' respective years, months, and days
+    # fichier pour écrire les dernières grid_params et les années, mois et jours respectifs des fichiers csv
     meta_file = "ais_parser/filter_for_visualisations/meta_data.yml"
 
-    # gets the config dictionary and unpacks it
+    # récupère le dictionnaire de configuration et le décompresse
     config = get_config(config_file)
     options = config["options"]
     directories = config["directories"]
     meta_params = config["meta_params"]
     grid_params = config["grid_params"]
 
-    # gets the csv files available and their metadata
+    # obtient les fichiers csv disponibles et leurs métadonnées
     start = time.time()
 
     csv_files, all_files_meta = collect_csv_files(
         options, directories, meta_params
     )
 
-    # reads the collected csv files and assembles trajectories
+    # lit les fichiers csv collectés et assemble les trajectoires
     trajectories, grid_params = read_data(csv_files, options, grid_params)
     logging.info("Readind AIS Files and Meta Data Done.", time.time() - start)
     logging.info("Generating CSV Files For Map Plotting...")
     start = time.time()
-    # processes (fits to grid) trajectories and writes generates sequences to output file
+    # traite (s'adapte à la grille) des trajectoires et écrit génère des séquences dans le fichier de sortie
     write_data(trajectories, options, directories, grid_params)
 
     logging.info("Data Writing Done (%fs)", time.time() - start)
 
-    # writes file metadata, paths, and grid parameters to ``meta_file``
+    # écrit les métadonnées de fichier, les chemins et les paramètres de grille dans `` meta_file``
     directories_out = {
         "in_dir_path": directories["out_dir_path"],
         "in_dir_data": directories["out_dir_file"],
@@ -76,18 +58,17 @@ def run():
 
 
 def get_config(config_file):
-    """Helper function to get dictionary of script parameters.
+    """Fonction d'aide pour obtenir le dictionnaire des paramètres de script.
 
-    Mostly boilerplate code to read in ``config_file`` as a ``.yaml`` file that specifies important script parameters.
-    Upon success, this config dictionary is returned to main to be unpacked.
+    Principalement du code standard à lire dans `` config_file '' en tant que fichier `` .yaml '' qui spécifie des paramètres de script importants.
+    En cas de succès, ce dictionnaire de configuration est renvoyé à main pour être décompressé.
 
     Args:
-        config_file (str): The name of the ``.yaml`` file containing the script configuration parameters, located in the
-            directory the script is run.
+        config_file (str): Le nom du fichier `` .yaml`` contenant les paramètres de configuration du script, situé dans le
+            répertoire dans lequel le script est exécuté.
 
-    Returns:
-        dict: The script configuration parameters.
-    """
+    Retour:
+        dict: les paramètres de configuration du script."""
     with open(config_file, "r") as stream:
         try:
             return yaml.safe_load(stream)
@@ -96,21 +77,21 @@ def get_config(config_file):
 
 
 def collect_csv_files(options, directories, meta_params):
-    """Traverses the directory containing the decompressed AIS data to get the csv names for further processing.
+    """Parcourt le répertoire contenant les données AIS décompressées pour obtenir les noms csv pour un traitement ultérieur.
 
-    Uses the ``os`` library to find all csv files within the directory defined by ``directories``, populating the
-    ``csv_files`` list for later reading of all valid csv files found and logging file metadata in ``all_files_meta``.
+    Utilise la bibliothèque `` os '' pour trouver tous les fichiers csv dans le répertoire défini par `` répertoires '', en remplissant le
+    Liste `` csv_files`` pour une lecture ultérieure de tous les fichiers csv valides trouvés et des métadonnées du fichier de journalisation dans `` all_files_meta``.
 
     Args:
-        options (dict): The script options specified in the ``config_file``.
-        directories (dict): The input and output paths and files specified in the ``config_file``.
-        meta_params (dict): The time and day boundaries specified in the ``config_file``.
+        options (dict): les options de script spécifiées dans le fichier `` config_file ''.
+        répertoires (dict): les chemins et fichiers d'entrée et de sortie spécifiés dans le fichier `` config_file ''.
+        meta_params (dict): Les limites d'heure et de jour spécifiées dans le fichier `` config_file ''.
 
-    Returns:
-        tuple: A list with paths to all valid csv files found and a dictionary with the year, month, and day
-        corresponding to each csv file's origin.
-    """
-    # initialize a list that will be filled with all csv file names from root
+    Retour:
+        tuple: une liste avec les chemins de tous les fichiers csv valides trouvés et un dictionnaire avec l'année, le mois et le jour
+        correspondant à l'origine de chaque fichier csv."""
+
+    # initialiser une liste qui sera remplie avec tous les noms de fichiers csv à partir de la racine
     csv_files = []
     all_files_meta = {}
     for root, dirs, files in os.walk(
@@ -120,9 +101,9 @@ def collect_csv_files(options, directories, meta_params):
             if file.endswith(".csv"):
                 year, month, day = get_meta_data(
                     file
-                )  # finds the data year, month, and day based on the file name
+                ) # recherche l'année, le mois et le jour des données en fonction du nom du fichier
 
-                # only considers valid years and months if time is bounded and valid days if days are bounded
+                # considère uniquement les années et les mois valides si le temps est limité et les jours valides si les jours sont limités
                 if (
                         not options["bound_time"]
                         or (
@@ -153,10 +134,10 @@ def collect_csv_files(options, directories, meta_params):
                                     or day <= meta_params["max_day"]
                             )
                     ):
-                        # csv_files will contain file locations relative to current directory
+                        # csv_files contiendra les emplacements des fichiers par rapport au répertoire courant
                         csv_files.append(os.path.join(root, file))
 
-                        # create dictionary to describe file characteristics
+                        # créer un dictionnaire pour décrire les caractéristiques du fichier
                         file_meta = {
                             "year": year,
                             "month": month,
@@ -168,27 +149,28 @@ def collect_csv_files(options, directories, meta_params):
 
 
 def read_data(csv_files, options, grid_params):
-    """Iterate through each csv file to segregate each trajectory by its mmsi id.
+    """Parcourez chaque fichier csv pour séparer chaque trajectoire par son identifiant mmsi.
 
-    Reads each csv in ``csv_files`` to obtain coordinates and timestamp series associated with each mmsi id encountered.
+    Lit chaque csv dans `` csv_files '' pour obtenir les coordonnées et les séries d'horodatage associées à chaque identifiant mmsi rencontré.
 
-    Optionally, the boundaries of the grid later specified can be inferred by calculating the minimum and maximum
-    longitudes and latitudes by setting ``options['bound_lon']`` and ``options['bound_lat']`` to ``False``, respectively
-    in the ``config_file``.
+    En option, les limites de la grille spécifiées ultérieurement peuvent être déduites en calculant le minimum et le maximum
+    longitudes et latitudes en définissant `` options ['bound_lon'] `` et `` options ['bound_lat'] '' sur `` False``, respectivement
+    dans le `` fichier_config ''.
 
-    It can also be specified to only read the first ``options['max_rows']`` of each csv file by setting
-    ``options['limit_rows']`` to True in the ``config_file``.
+    Il peut également être spécifié de ne lire que les premières `` options ['max_rows'] '' de chaque fichier csv en définissant
+    `` options ['limit_rows'] `` à True dans le `` config_file``.
 
     Args:
-        csv_files (list): Paths to all valid csv files found.
-        options (dict): The script options specified in the ``config_file``.
-        grid_params (dict): The grid parameters specified in the ``config_file``.
+        csv_files (liste): chemins vers tous les fichiers csv valides trouvés.
+        options (dict): les options de script spécifiées dans le fichier `` config_file ''.
+        grid_params (dict): Les paramètres de grille spécifiés dans le `` config_file ''.
 
-    Returns:
-        tuple: A pandas DataFrame of all data entries with the format ``['MMSI', 'LON', 'LAT', 'TIME']`` and a
-        dictionary that specifies the minimum and maximum latitudes and longitudes in the dataset.
+    Retour:
+        tuple: Un DataFrame pandas de toutes les entrées de données au format `` ['MMSI', 'LON', 'LAT', 'TIME'] `` et un
+        dictionnaire qui spécifie les latitudes et longitudes minimales et maximales dans l'ensemble de données.
     """
-    # overwrite hard boundaries on longitude and latitude if not bounded in config.yaml
+
+    # écraser les limites strictes sur la longitude et la latitude si elles ne sont pas limitées dans config.yaml
     if not options["bound_lon"]:
         grid_params["min_lon"] = 180
         grid_params["max_lon"] = -180
@@ -196,7 +178,7 @@ def read_data(csv_files, options, grid_params):
         grid_params["min_lat"] = 90
         grid_params["max_lat"] = -90
 
-    # holds all ais data, one dataframe per csv file
+    # contient toutes les données AIS, une trame de données par fichier csv
     ais_data = []
 
     # get data from all csv files
@@ -652,73 +634,73 @@ def get_action_arb(row, options, grid_params):
 
 
 def get_action_interp_with_diag(row, options, grid_params):
-    """Calculates the actions taken from the previous state to reach the current state, interpolating if necessary.
+    """Calcule les actions prises à partir de l'état précédent pour atteindre l'état actuel, en interpolant si nécessaire.
 
-    First, the relative offset between the current and previous state in rows and columns is calculated.
-    Then the sign of ``rel_row`` and ``rel_col`` are then used to iteratively describe a sequence of actions
-    from the previous state to current state, breaking up state transitions with multiple actions if
-    the states are not adjacent (including diagonals, resulting in 9 possible actions). This interpolation
-    assumes a deterministic system.
+    Tout d'abord, le décalage relatif entre l'état actuel et l'état précédent dans les lignes et les colonnes est calculé.
+    Ensuite, le signe `` rel_row '' et `` rel_col '' sont ensuite utilisés pour décrire itérativement une séquence d'actions
+    de l'état précédent à l'état actuel, interrompant les transitions d'état avec plusieurs actions si
+    les états ne sont pas adjacents (y compris les diagonales, ce qui donne 9 actions possibles). Cette interpolation
+    suppose un système déterministe.
 
-    Example:
-        For example, if ``prev_state = 5``, ``cur_state = 7``, and ``num_cols = 4``, then our state grid is populated
-        as follows::
+    Exemple:
+        Par exemple, si `` prev_state = 5 '', `` cur_state = 7 '' et `` num_cols = 4 '', alors notre grille d'état est remplie
+        comme suit::
 
-            8  9 10 11
-            4  p  6  c
-            0  1  2  3
+            8 9 10 11
+            4 p 6 c
+            0 1 2 3
 
-        Output snippet::
+        Extrait de sortie ::
 
-            pd.DataFrame({})
+            pd.DataFrame ({})
 
-        Where p represents the location of the previous state, and c represents the location of the current state.
-        Then the current state's position relative to the previous state is ``rel_row = 0``, ``rel_col = 2``. Our
-        action spiral then looks like this::
+        Où p représente l'emplacement de l'état précédent et c représente l'emplacement de l'état actuel.
+        Ensuite, la position de l'état actuel par rapport à l'état précédent est `` rel_row = 0 '', `` rel_col = 2 ''. Notre
+        la spirale d'action ressemble alors à ceci:
 
-            4  3  2      4  3  2
-            5  0  1  ->  5  p  1  c
-            7  8  9      6  7  8
+            4 3 2 4 3 2
+            5 0 1 -> 5 p 1 c
+            7 8 9 6 7 8
 
-        Output snippet::
+        Extrait de sortie ::
 
-            pd.DataFrame({
-                            'ID': [traj_num, ],
-                            'PREV': [prev_state, ],
-                            'ACT': [1, ],
-                            'CUR': [prev_state + 1, ]
+            pd.DataFrame ({
+                            'ID': [traj_num,],
+                            'PREV': [état_précédent,],
+                            'ACTE 1, ],
+                            "CUR": [état_prév + 1,]
                         })
 
-        Because the current state is not adjacent (including diagonals), we interpolate by taking the action that
-        brings us closest to the current state: action ``1``, resulting in a new action spiral and a new previous
-        state::
+        Comme l'état actuel n'est pas adjacent (y compris les diagonales), nous interpolons en prenant l'action qui
+        nous rapproche de l'état actuel: l'action `` 1 '', résultant en une nouvelle spirale d'action et un nouveau précédent
+        Etat::
 
-            4  3  2      4  3  2
-            5  0  1  ->  5  p  c
-            7  8  9      6  7  8
+            4 3 2    4 3 2
+            5 0 1 -> 5 p c
+            7 8 9    6 7 8
 
-        Final output::
+        Sortie finale ::
 
-            pd.DataFrame({
+            pd.DataFrame ({
                             'ID': [traj_num] * 2,
-                            'PREV': [prev_state, prev_state + 1],
+                            'PREV': [état_prév, état_prév + 1],
                             'ACT': [1, 1],
-                            'CUR': [prev_state + 1, cur_state]
+                            'CUR': [état_prév + 1, état_cur]
                         })
 
-        Now, our new previous state is adjacent to the current state, so we can take action ``1``, which updates our
-        previous state to exactly match the current state, so the algorithm terminates and returns the list of
-        state-action-state transitions.
+        Maintenant, notre nouvel état précédent est adjacent à l'état actuel, nous pouvons donc prendre l'action `` 1 '', qui met à jour notre
+        état précédent pour correspondre exactement à l'état actuel, de sorte que l'algorithme se termine et renvoie la liste des
+        transitions état-action-état.
 
     Args:
-        row (pandas.Series): One row of the DataFrame the function is applied to, containing the trajectory number,
-            previous state, current state, longitude, and latitude.
-        options (dict): The script options specified in the ``config_file``.
-        grid_params (dict): The grid parameters specified in the ``config_file``.
+        row (pandas.Series): une ligne du DataFrame auquel la fonction est appliquée, contenant le numéro de trajectoire,
+            état précédent, état actuel, longitude et latitude.
+        options (dict): les options de script spécifiées dans le fichier `` config_file ''.
+        grid_params (dict): Les paramètres de grille spécifiés dans le `` config_file ''.
 
-    Returns:
-        dict: State-action-state triplets that interpolate between ``prev_state`` and ``cur_state``.
-    """
+    Retour:
+        dict: triplets état-action-état qui interpolent entre `` prev_state '' et `` cur_state ''.
+    "" """
     # retrieves transition data
     traj_num = int(row["ID"])
     prev_state = int(row["PREV"])
@@ -887,18 +869,18 @@ def get_action_interp_reg(row, options, grid_params):
     lons = []
     lats = []
 
-    # gets row, column decomposition for previous and current states
+    # obtient la décomposition des lignes et des colonnes pour les états précédents et actuels
     prev_row = prev_state // num_cols
     prev_col = prev_state % num_cols
     cur_row = cur_state // num_cols
     cur_col = cur_state % num_cols
-    # calculates current state's position relative to previous state
+    # calcule la position de l'état actuel par rapport à l'état précédent
     rel_row = cur_row - prev_row
     rel_col = cur_col - prev_col
 
-    # write output rows until rel_row and rel_col are both zero
+    # écrire les lignes de sortie jusqu'à ce que rel_row et rel_col soient tous les deux à zéro
     while not (rel_row == 0 and rel_col == 0):
-        # selects action to reduce the largest of rel_row and rel_col
+        # sélectionne l'action pour réduire le plus grand de rel_row et rel_col
         action = -1
         if rel_row > 0 and rel_col > 0:
             action = 2 if rel_row > rel_col else 1
@@ -917,11 +899,11 @@ def get_action_interp_reg(row, options, grid_params):
         elif rel_row < 0 and rel_col < 0:
             action = 4 if -rel_row > -rel_col else 3
 
-        # moves rel_row and rel_col in the opposite directions of their signs
+        # déplace rel_row et rel_col dans les directions opposées de leurs signes
         row_diff = -np.sign(rel_row) if (action == 2 or action == 4) else 0
         col_diff = -np.sign(rel_col) if (action == 1 or action == 3) else 0
 
-        # updates states and relative row, column based on action selected
+        # met à jour les états et la ligne relative, la colonne en fonction de l'action sélectionnée
         rel_row += row_diff
         rel_col += col_diff
         temp_row = prev_row - row_diff
@@ -929,12 +911,12 @@ def get_action_interp_reg(row, options, grid_params):
         temp_state = temp_row * num_cols + temp_col
         prev_state = prev_row * num_cols + prev_col
 
-        # records an interpolated state-action-state transition
+        # enregistre une transition état-action-état interpolée
         prevs.append(prev_state)
         acts.append(action)
         curs.append(temp_state)
 
-        # gets the coordinates of the interpolated state - will be the coordinates of the middle of the state
+        # obtient les coordonnées de l'état interpolé - seront les coordonnées du milieu de l'état
         if options["append_coords"]:
             lon, lat = state_to_coord(prev_state, options, grid_params)
             lons.append(lon)
@@ -943,7 +925,7 @@ def get_action_interp_reg(row, options, grid_params):
         prev_row = temp_row
         prev_col = temp_col
 
-    # prepares final data dictionary to build DataFrame
+    # prépare le dictionnaire de données final pour construire DataFrame
     out_data = {
         "ID": [traj_num] * len(acts),
         "PREV": prevs,
@@ -951,7 +933,7 @@ def get_action_interp_reg(row, options, grid_params):
         "CUR": curs,
     }
 
-    # overwrites the coordinates of the first state in interpolated transitions to be original raw values
+    # écrase les coordonnées du premier état dans les transitions interpolées en valeurs brutes d'origine
     if options["append_coords"]:
         lons[0] = row["Longitude"]
         lats[0] = row["Latitude"]
@@ -962,18 +944,17 @@ def get_action_interp_reg(row, options, grid_params):
 
 
 def state_to_coord(state, options, grid_params):
-    """Inverse function for ``get_state``.
+    """Fonction inverse pour `` get_state ''.
 
-    Calculates the coordinates of the middle of the passed in state in the specified grid passed in.
+    Calcule les coordonnées du milieu de l'état passé dans la grille spécifiée transmise.
 
     Args:
-        state (int): The discretized grid square returned by ``get_state``.
-        options (dict): The script options specified in the ``config_file``.
-        grid_params (dict): The grid parameters specified in the ``config_file``.
+        state (int): Le carré de la grille discrétisé renvoyé par `` get_state ''.
+        options (dict): les options de script spécifiées dans le fichier `` config_file ''.
+        grid_params (dict): Les paramètres de grille spécifiés dans le `` config_file ''.
 
-    Returns:
-        tuple: The longitude and latitude representing the middle of the state passed in.
-    """
+    Retour:
+        tuple: La longitude et la latitude représentant le milieu de l'état transmis. """
     # calculates the integer state's row and column representation in the grid
     state_col = state % grid_params["num_cols"]
     state_row = state // grid_params["num_cols"]

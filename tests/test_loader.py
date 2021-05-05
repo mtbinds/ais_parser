@@ -64,15 +64,15 @@ class TestLoader:
 
 
     def test_loader_config_no_global(self, setup_no_global_config):
-        """ Tests that repositories and algorithms are correctly loaded
+        """ Tests that repositories and programs are correctly loaded
 
         When using a config file, without a global section, check that the
-        bundled repos and algorithms are loaded correctly
+        bundled repos and programs are loaded correctly
         """
 
         myloader = Loader(self.config)
         algos = list(myloader.get_algorithms())
-        repos = list(myloader.get_data_repositories())
+        repos = list(myloader.get_datarepositories())
 
         expected_algorithms = ['vesselimporter',
                                'imolist',
@@ -90,12 +90,12 @@ class TestLoader:
         """ With an empty global section, check config correctly loaded
 
         When using a config file, with an empty global section, check that the
-        bundled repos and algorithms are loaded correctly
+        bundled repos and programs are loaded correctly
         """
 
         myloader = Loader(self.config)
         algos = list(myloader.get_algorithms())
-        repos = list(myloader.get_data_repositories())
+        repos = list(myloader.get_datarepositories())
 
         expected_algorithms = ['vesselimporter',
                                'imolist',

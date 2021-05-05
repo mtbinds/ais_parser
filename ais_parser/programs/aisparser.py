@@ -1,5 +1,3 @@
-""" Parses the AIS data from csv of xml files and populates the AIS database
-"""
 
 import os
 import csv
@@ -13,13 +11,13 @@ from xml.etree import ElementTree
 from ais_parser import utils
 
 EXPORT_COMMANDS = [('run', 'Parse Messages From CSV into The PGSql Database.')]
-# Repository used for input to the algorithm
+# Répertoire utilisé pour l'entrée dans le programme
 INPUTS = ["aiscsv"]
-# Repositories used for output from the algorithm
+# Répertoires utilisés pour la sortie du programme
 OUTPUTS = ["aisdb", "baddata"]
 
 
-def parse_timestamp(s):
+def analyze_timestamp(s):
     return datetime.strptime(s, '%d/%m/%Y %H:%M:%S')
 
 
@@ -37,39 +35,29 @@ def float_or_null(s):
         return float(s.replace(',', '.'))
 
 
-def imostr(s):
+def imostring(s):
     if len(s) > 20:
         return None
     return s
 
 
-def longstr(s):
+def longstring(s):
     if len(s) > 255:
         return s[0:255]
     return s
 
 
-def set_null_on_fail(row, col, test):
-    """ Helper function which sets the column in a row of data to null on fail
+def set_to_null_on_fail(row, col, test):
 
-    Arguments
-    ---------
-    row : dict
-        A dictionary of the fields
-    col : str
-        The column to check
-    test : func
-        One of the validation functions in ais_parser.utils
-    """
     if not row[col] is None and not test(row[col]):
         row[col] = None
 
 
-def check_imo(imo):
+def verify_imo(imo):
     return imo is None or utils.valid_imo(imo)
 
 
-# column name constants
+# constantes de nom de colonnes.
 MMSI = 'MMSI'
 TIME = 'Complete_Sys_Date'
 MESSAGE_TYPE = 'Message_Type'
@@ -89,8 +77,7 @@ ETA_DAY = 'ETA_Day'
 ETA_HOUR = 'ETA_Hour'
 ETA_MINUTE = 'ETA_Minute'
 
-# specifies columns to take from raw data, and functions to convert them into
-# suitable type for the database.
+# spécifie les colonnes à extraire des données brutes et les fonctions pour les convertir en type approprié pour la base de données.
 AIS_CSV_COLUMNS = [MMSI,
                    TIME,
                    MESSAGE_TYPE,
@@ -110,8 +97,7 @@ AIS_CSV_COLUMNS = [MMSI,
                    ETA_HOUR,
                    ETA_MINUTE]
 
-# xml names differ from csv. This array describes the names in this file which
-# correspond to the csv column names
+# ce tableau décrit les noms de ce fichier qui correspond aux noms de colonne csv
 AIS_XML_COLNAMES = [
     'mmsi',
     'date_time',
@@ -133,31 +119,16 @@ AIS_XML_COLNAMES = [
     'eta_minute']
 
 
-def xml_name_to_csv(name):
-    """Converts a tag name from an XML file to the corresponding name from CSV."""
+def xml_to_csv(name):
+
     return AIS_CSV_COLUMNS[AIS_XML_COLNAMES.index(name)]
 
 
-def parse_raw_row(row):
-    """Parse values from row, returning a new dict with converted values
+def analyze_raw_row(row):
 
-    Parse values from row, returning a new dict with converted values
-    converted into appropriate types. Throw an exception to reject row
-
-    Arguments
-    ---------
-    row : dict
-        A dictionary of headers and values from the csv file
-
-    Returns
-    -------
-    converted_row : dict
-        A dictionary of headers and values converted using the helper functions
-
-    """
     converted_row = {}
     converted_row[MMSI] = int_or_null(row[MMSI])
-    converted_row[TIME] = parse_timestamp(row[TIME])
+    converted_row[TIME] = analyze_timestamp(row[TIME])
     converted_row[MESSAGE_TYPE] = int_or_null(row[MESSAGE_TYPE])
     converted_row[NAV_STATUS] = int_or_null(row[NAV_STATUS])
     converted_row[SOG] = float_or_null(row[SOG])
@@ -167,8 +138,8 @@ def parse_raw_row(row):
     converted_row[HEADING] = float_or_null(row[HEADING])
     converted_row[IMO] = int_or_null(row[IMO])
     converted_row[DRAUGHT] = float_or_null(row[DRAUGHT])
-    converted_row[DEST] = longstr(row[DEST])
-    converted_row[VESSEL_NAME] = longstr(row[VESSEL_NAME])
+    converted_row[DEST] = longstring(row[DEST])
+    converted_row[VESSEL_NAME] = longstring(row[VESSEL_NAME])
     converted_row[SHIP_TYPE] = int_or_null(row[SHIP_TYPE])
     converted_row[ETA_MONTH] = int_or_null(row[ETA_MONTH])
     converted_row[ETA_DAY] = int_or_null(row[ETA_DAY])
@@ -181,89 +152,53 @@ CONTAINS_LAT_LON = set([1, 2, 3, 4, 9, 11, 17, 18, 19, 21, 27])
 
 
 def validate_row(row):
-    # validate MMSI, message_type and IMO
+    # valider MMSI, message_type et IMO_Number
     if not utils.valid_mmsi(row[MMSI]) \
-            or not utils.valid_message_type(row[MESSAGE_TYPE]) \
-            or not check_imo(row[IMO]):
+            or not utils.valid_messagetype(row[MESSAGE_TYPE]) \
+            or not verify_imo(row[IMO]):
         raise ValueError("Row Invalid")
-    # check lat long for messages which should contain it
+    # vérifier (lat) (long) pour les messages qui devraient le contenir
     if row[MESSAGE_TYPE] in CONTAINS_LAT_LON:
         if not (utils.valid_longitude(row[LONGITUDE]) and
                 utils.valid_latitude(row[LATITUDE])):
             raise ValueError("Row Invalid (lat,lon)")
-    # otherwise set them to None
+    # sinon les définir sur None
     else:
 
         row[LONGITUDE] = None
         row[LATITUDE] = None
 
-    # validate other columns
-    set_null_on_fail(row, NAV_STATUS, utils.valid_navigational_status)
-    set_null_on_fail(row, SOG, utils.is_valid_sog)
-    set_null_on_fail(row, COG, utils.is_valid_cog)
-    set_null_on_fail(row, HEADING, utils.is_valid_heading)
+    # valider les autres colonnes
+    set_to_null_on_fail(row, NAV_STATUS, utils.valid_navigationalstatus)
+    set_to_null_on_fail(row, SOG, utils.is_validsog)
+    set_to_null_on_fail(row, COG, utils.is_validcog)
+    set_to_null_on_fail(row, HEADING, utils.is_validheading)
     return row
 
 
 def get_data_source(name):
-    """Guesses data source from file name.
 
-    If the name contains 'terr' then we guess terrestrial data,
-    otherwise we assume satellite.
-
-    Arguments
-    =========
-    name : str
-        File name
-
-    Returns
-    =======
-    int
-        0 if satellite, 1 if terrestrial
-
-    """
     if name.find('terr') != -1:
-        # terrestrial
+        # terrestre
         return 1
     else:
-        # assume satellite
+        # satellite
         return 0
 
 
 def run(inp, out, dropindices=True, source=0):
-    """Populate the AIS_Raw database with messages from the AIS csv files
-
-    Arguments
-    ---------
-    inp : str
-        The name of the repositor(-y/-ies) as defined in the global variable
-        `INPUTS`
-    out : str
-        The name of the repositor(-y/-ies) as defined in the global variable
-        `OUTPUTS`
-    dropindices : bool, optional, default=True
-        Drop indexes for faster insert
-    source : int, optional, default=0
-        Indicates terrestrial (1) or satellite data (0)
-
-    Returns
-    -------
-    """
 
     files = inp['aiscsv']
     db = out['aisdb']
     log = out['baddata']
 
-    # drop indexes for faster insert
+    # supprimer des index pour une insertion plus rapide
     if dropindices:
         db.clean.drop_indices()
         db.dirty.drop_indices()
 
     def sqlworker(q, table):
-        """ Worker thread
 
-        Takes batches of tuples from the queue to be inserted into the database
-        """
         while True:
             msgs = [q.get()]
             while not q.empty():
@@ -276,14 +211,14 @@ def run(inp, out, dropindices=True, source=0):
                     table.insert_rows_batch(msgs)
                 except Exception as e:
                     logging.warning("Error Executing Query: " + repr(e))
-            # mark this task as done
+            # marquer cette tâche comme terminée
             for _ in range(n):
                 q.task_done()
 
-    # queue for messages to be inserted into db
+    # file d'attente pour les messages à insérer dans la base de données
     dirtyq = queue.Queue(maxsize=1000000)
     cleanq = queue.Queue(maxsize=1000000)
-    # set up processing pipeline threads
+    # configurer les threads de pipeline de traitement
     clean_thread = threading.Thread(target=sqlworker, daemon=True,
                                     args=(cleanq, db.clean))
     dirty_thread = threading.Thread(target=sqlworker, daemon=True,
@@ -294,7 +229,7 @@ def run(inp, out, dropindices=True, source=0):
     start = time.time()
 
     for fp, name, ext in files.iterfiles():
-        # check if we've already parsed this file
+        # vérifier si nous avons déjà analysé ce fichier
         with db.conn.cursor() as cur:
             cur.execute("SELECT COUNT(*) FROM " + db.sources.name +
                         " WHERE filename = %s AND source = %s",
@@ -303,11 +238,11 @@ def run(inp, out, dropindices=True, source=0):
                 logging.info("Already Parsed " + name + ", Skipping...")
                 continue
 
-        # parse file
+        # analyser le fichier
         try:
             log_path = os.path.join(log.root, os.path.basename(name))
-            invalid_ctr, clean_ctr, dirty_ctr, duration = parse_file(fp, name, ext, log_path, cleanq, dirtyq,
-                                                                     source=source)
+            invalid_ctr, clean_ctr, dirty_ctr, duration = analyze_file(fp, name, ext, log_path, cleanq, dirtyq,
+                                                                       source=source)
             dirtyq.join()
             cleanq.join()
             db.sources.insert_row({'filename': name,
@@ -324,7 +259,7 @@ def run(inp, out, dropindices=True, source=0):
             logging.warn("Error Parsing File %s: %s", name, repr(error))
             db.conn.rollback()
 
-    # wait for queued tasks to finish
+    # attendre la fin des tâches en file d'attente
     dirtyq.join()
     cleanq.join()
     db.conn.commit()
@@ -340,50 +275,21 @@ def run(inp, out, dropindices=True, source=0):
                      time.time() - start)
 
 
-def parse_file(fp, name, ext, baddata_logfile, cleanq, dirtyq, source=0):
-    """ Parses a file containing AIS data, placing rows of data onto queues
+def analyze_file(fp, name, ext, baddata_logfile, cleanq, dirtyq, source=0):
 
-    Arguments
-    ---------
-    fp : str
-        Filepath of file to be parsed
-    name : str
-        Name of file to be parsed
-    ext : str
-        Extension, either '.csv' or '.xml'
-    baddata_logfile : str
-        Name of the logfile
-    cleanq :
-        Queue for messages to be inserted into clean table
-    dirtyq :
-        Queue for messages to be inserted into dirty table
-    source : int, optional, default=0
-        0 is satellite, 1 is terrestrial
-
-    Returns
-    -------
-    invalid_ctr : int
-        Number of invalid rows
-    clean_ctr : int
-        Number of clean rows
-    dirty_ctr : int
-        Number of dirty rows
-    time_elapsed : time
-        The time elapsed since starting the parse_file procedure
-    """
     filestart = time.time()
     logging.info("Parsing " + name)
 
-    # open error log csv file and write header
+    # ouvrir le fichier csv du journal des erreurs et écrire l'en-tête
     with open(baddata_logfile, 'w') as errorlog:
         logwriter = csv.writer(errorlog, delimiter=';', quotechar='"')
 
-        # message counters
+        # compteurs de messages
         clean_ctr = 0
         dirty_ctr = 0
         invalid_ctr = 0
 
-        # Select the a file iterator based on file extension
+        # Sélectionnez un itérateur de fichier basé sur l'extension de fichier
         if ext == '.csv':
             iterator = readcsv
         elif ext == '.xml':
@@ -391,32 +297,32 @@ def parse_file(fp, name, ext, baddata_logfile, cleanq, dirtyq, source=0):
         else:
             raise RuntimeError("Cannot Parse File With Extension %s" % ext)
 
-        # infer the data source from the file name
+        # déduire la source de données à partir du nom de fichier
         # source = get_data_source(name)
 
-        # parse and iterate lines from the current file
+        # analyser et itérer les lignes du fichier courant
         for row in iterator(fp):
             converted_row = {}
             try:
-                # parse raw data
-                converted_row = parse_raw_row(row)
+                # analyser les données brutes
+                converted_row = analyze_raw_row(row)
                 converted_row['source'] = source
             except ValueError as e:
-                # invalid data in row. Write it to error log
+                # données non valides dans la ligne. Écriture dans le journal des erreurs
                 if not 'raw' in row:
                     row['raw'] = [row[c] for c in AIS_CSV_COLUMNS]
                 logwriter.writerow(row['raw'] + ["{}".format(e)])
                 invalid_ctr = invalid_ctr + 1
                 continue
             except KeyError:
-                # missing data in row.
+                # données manquantes dans la ligne.
                 if not 'raw' in row:
                     row['raw'] = [row[c] for c in AIS_CSV_COLUMNS]
                 logwriter.writerow(row['raw'] + ["Bad Row Length"])
                 invalid_ctr = invalid_ctr + 1
                 continue
 
-            # validate parsed row and add to appropriate queue
+            # valider la ligne analysée et l'ajouter à la file d'attente appropriée
             try:
                 validated_row = validate_row(converted_row)
                 cleanq.put(validated_row)
@@ -432,33 +338,13 @@ def parse_file(fp, name, ext, baddata_logfile, cleanq, dirtyq, source=0):
 
 
 def readcsv(fp):
-    """ Returns a dictionary of the subset of columns required
-
-    Reads each line in CSV file, checks if all columns are available,
-    and returns a dictionary of the subset of columns required
-    (as per AIS_CSV_COLUMNS).
-
-    If row is invalid (too few columns),
-    returns an empty dictionary.
-
-    Arguments
-    ---------
-    fp : str
-        File path
-
-    Yields
-    ------
-    rowsubset : dict
-        A dictionary of the subset of columns as per `columns`
-
-    """
-    # fix for large field error. Specify max field size to the maximum convertable int value.
+    # correctif pour une erreur de grand champ. Spécifiez la taille maximale du champ à la valeur int convertible maximale.
     # source: http://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
     max_int = sys.maxsize
     decrement = True
     while decrement:
-        # decrease the max_int value by factor 10
-        # as long as the OverflowError occurs.
+        # diminuer la valeur max_int d'un facteur 10
+        # tant que l'OverflowError se produit.
         decrement = False
         try:
             csv.field_size_limit(max_int)
@@ -466,8 +352,8 @@ def readcsv(fp):
             max_int = int(max_int / 10)
             decrement = True
 
-    # Lines is column headers.
-    # Use to extract indices of columns we are extracting
+    # Les lignes correspondent aux en-têtes de colonnes.
+    # Utilisées pour extraire les index des colonnes que nous extrayons
     cols = fp.readline().rstrip('').split(';')
     indices = {}
     n_cols = len(cols)
@@ -484,9 +370,9 @@ def readcsv(fp):
             if len(row) == n_cols:
                 for col in AIS_CSV_COLUMNS:
                     try:
-                        rowsubset[col] = row[indices[col]]  # raw column data
+                        rowsubset[col] = row[indices[col]]  # données de colonne brutes
                     except IndexError:
-                        # not enough columns, just blank missing data.
+                        # pas assez de colonnes, juste vider les données manquantes.
                         rowsubset[col] = ''
             yield rowsubset
     except UnicodeDecodeError as e:
@@ -497,15 +383,15 @@ def readcsv(fp):
 
 def readxml(fp):
     current = _empty_row()
-    # iterate xml 'end' events
+    # itérer les événements XML 'end'
     for _, elem in ElementTree.iterparse(fp):
-        # end of aismessage
+        # fin d'aismessage
         if elem.tag == 'aismessage':
             yield current
             current = _empty_row()
         else:
             if elem.tag in AIS_XML_COLNAMES and elem.text != None:
-                current[xml_name_to_csv(elem.tag)] = elem.text
+                current[xml_to_csv(elem.tag)] = elem.text
 
 
 def _empty_row():

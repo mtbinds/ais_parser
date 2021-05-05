@@ -1,6 +1,3 @@
-"""This module provides the Loader class which loads an ais_parser session from a
-configuation file. This session can then run tasks on data repositories and
-algorithms."""
 
 import logging
 import imp
@@ -12,7 +9,7 @@ from ais_parser import get_resource_filename
 
 
 def load_module(name, paths):
-    """Load module name using the given search paths."""
+    """Chargez le nom du module en utilisant les chemins de recherche donnés."""
     handle, pathname, description = imp.find_module(name, paths)
     if handle is not None:
         return imp.load_module(name, handle, pathname, description)
@@ -21,7 +18,7 @@ def load_module(name, paths):
 
 
 def load_all_modules(paths):
-    """Load all modules on the given paths."""
+    """Chargez tous les modules sur les chemins indiqués."""
     modules = {}
     for _, name, _ in pkgutil.walk_packages(paths):
         try:
@@ -32,11 +29,11 @@ def load_all_modules(paths):
 
 
 class Loader:
-    """The Loader joins together data repositories and algorithms,
-    and executes operations on them."""
+    """Le Loader réunit des référentiels de données et des programmes,
+    et exécute des opérations sur eux."""
 
     def __init__(self, config=None):
-        # load from file if path provided
+        # charger à partir du fichier si le chemin est fourni
         loaded_conf = ConfigParser()
         if config is None:
             raise RuntimeError("No Config File Defined.")
@@ -75,119 +72,119 @@ class Loader:
                 repo_conf_dict[repo_name] = conf
 
         if 'globals' in config:
-            algopaths = str(config.get('globals', 'algos'))
-            algopaths = algopaths.split(',')
-            algopaths.extend([get_resource_filename('algorithms')])
+            progpaths = str(config.get('globals', 'progs'))
+            progpaths = progpaths.split(',')
+            progpaths.extend([get_resource_filename('programs')])
             vispaths = str(config.get('globals', 'visos'))
             vispaths = vispaths.split(',')
             vispaths.extend([get_resource_filename('filter_for_visualisations')])
         else:
-            algopaths = [get_resource_filename('algorithms')]
+            progpaths = [get_resource_filename('programs')]
             vispaths = [get_resource_filename('filter_for_visualisations')]
             expaths = [get_resource_filename('exports')]
 
-        # load algorithms from algopaths
-        logging.debug("Paths to Algorithms: {}".format(algopaths))
-        algorithms = load_all_modules(algopaths)
+        # charger des programmes à partir de progpaths
+        logging.debug("Paths to Programs: {}".format(progpaths))
+        programs = load_all_modules(progpaths)
 
-        # load visualisations from vispaths
+        # charger des visualisations à partir de vispaths
         logging.debug("Paths to Visualisations: {}".format(vispaths))
         filter_for_visualisations = load_all_modules(vispaths)
 
         self.repo_drivers = repo_drivers
         self.repo_config = repo_conf_dict
-        self.algorithms = algorithms
+        self.programs = programs
         self.filter_for_visualisations = filter_for_visualisations
 
 
-    def get_data_repositories(self):
-        """Returns a set of the names of available data repositories"""
+    def get_datarepositories(self):
+        """Renvoie un ensemble de noms de répertoiress de données disponibles"""
         return self.repo_config.keys()
 
-    def get_repository_commands(self, repo_name):
-        """Returns a list of available commands for the specified repository"""
+    def get_repositorycommands(self, repo_name):
+        """Renvoie une liste des commandes disponibles pour le référentiel spécifié"""
         try:
             return self.repo_drivers[self.repo_config[repo_name]['type']].EXPORT_COMMANDS
         except AttributeError:
             return []
 
-    def get_algorithm_commands(self, algname):
-        """Returns a list of available commands for the specified algorithm"""
+    def get_programcommands(self, progname):
+        """Renvoie une liste des commandes disponibles pour le programme spécifié"""
         try:
-            return self.algorithms[algname].EXPORT_COMMANDS
+            return self.programs[progname].EXPORT_COMMANDS
         except AttributeError:
             return []
 
-    def get_filter_for_visualisation_commands(self, visname):
-        """Returns a list of available commands for visualisation"""
+    def get_filterforvisualisationcommands(self, visname):
+        """Renvoie une liste des commandes disponibles pour la visualisation"""
         try:
             return self.filter_for_visualisations[visname].EXPORT_COMMANDS
         except AttributeError:
             return []
 
-    def get_algorithms(self):
-        """Returns a set of the names of available algorithms"""
-        return self.algorithms.keys()
+    def get_programs(self):
+        """Renvoie un ensemble de noms de programmes disponibles"""
+        return self.programs.keys()
 
-    def get_filter_for_visualisations(self):
-        """Returns a set of the names of available visulaisation"""
+    def get_filterforvisualisations(self):
+        """Renvoie un ensemble de noms de visulaisations disponibles"""
         return self.filter_for_visualisations.keys()
 
-    def execute_repository_command(self, reponame, command, **args):
-        """Execute the specified command on the specified repository."""
-        if not command in [c[0] for c in self.get_repository_commands(reponame)]:
+    def execute_repositorycommand(self, reponame, command, **args):
+        """Exécutez la commande spécifiée sur le référentiel spécifié."""
+        if not command in [c[0] for c in self.get_repositorycommands(reponame)]:
             raise ValueError("Invalid command {} for repository {}".format(command, reponame))
-        # load repostory class
-        repo = self.get_data_repository(reponame)
+        # classe de répertoire de chargement
+        repo = self.get_datarepository(reponame)
         fns = inspect.getmembers(repo, lambda x: inspect.ismethod(x) and x.__name__ == command)
         if len(fns) != 1:
             raise RuntimeError("Unable to find method {} in repository {}: {}".format(command, reponame, repo))
         with repo:
-            # call command
+            # appel de commande
             fns[0][1](**args)
 
-    def execute_algorithm_command(self, algname, command, **args):
-        """Execute the specified command on the specified algorithm"""
-        alg = self.get_algorithm(algname)
-        fns = inspect.getmembers(alg, lambda x: inspect.isfunction(x) and x.__name__ == command)
+    def execute_programcommand(self, progname, command, **args):
+        """Exécuter la commande spécifiée sur le programme spécifié"""
+        prog = self.get_program(progname)
+        fns = inspect.getmembers(prog, lambda x: inspect.isfunction(x) and x.__name__ == command)
         if len(fns) != 1:
-            raise RuntimeError("Unable to find function {} in algorithm {}: {}".format(command, algname, alg))
+            raise RuntimeError("Unable to find function {} in program {}: {}".format(command, progname, prog))
 
-        # get inputs and outputs
+        # obtenir des entrées et des sorties
         inputs = {}
         outputs = {}
 
-        for inp in alg.INPUTS:
-            inputs[inp] = self.get_data_repository(inp, readonly=True)
-        for out in alg.OUTPUTS:
-            outputs[out] = self.get_data_repository(out)
+        for inp in prog.INPUTS:
+            inputs[inp] = self.get_datarepository(inp, readonly=True)
+        for out in prog.OUTPUTS:
+            outputs[out] = self.get_datarepository(out)
 
         with contextlib.ExitStack() as stack:
-            # prepare repositories
+            # préparer les référentiels
             for i in inputs:
                 stack.enter_context(inputs[i])
             for i in outputs:
                 stack.enter_context(outputs[i])
             fns[0][1](inputs, outputs, **args)
 
-    def execute_filter_for_visualisation_command(self, visname, command, **args):
-        """Execute the specified command on the specified visualisation"""
-        vis = self.get_filter_for_visualisation(visname)
+    def execute_filterforvisualisationcommand(self, visname, command, **args):
+        """Exécuter la commande spécifiée sur la visualisation spécifiée"""
+        vis = self.get_filterforvisualisation(visname)
         fns = inspect.getmembers(vis, lambda x: inspect.isfunction(x) and x.__name__ == command)
         if len(fns) != 1:
             raise RuntimeError("Unable to find function {} in visualisation {}: {}".format(command, visname, vis))
         fns[0][1](**args)
 
 
-    def get_data_repository(self, name, readonly=False):
-        """Returns a loaded instance of the specified data repository."""
+    def get_datarepository(self, name, readonly=False):
+        """Renvoie une instance chargée du référentiel de données spécifié."""
         return self.repo_drivers[self.repo_config[name]['type']].load(self.repo_config[name], readonly=readonly)
 
-    def get_algorithm(self, name):
-        """Returns the algorithm module specified."""
-        return self.algorithms[name]
+    def get_program(self, name):
+        """Renvoie le module de programme spécifié."""
+        return self.programs[name]
 
-    def get_filter_for_visualisation(self, name):
-        """Returns the visualisation module specified."""
+    def get_filterforvisualisation(self, name):
+        """Renvoie le module de visualisation spécifié."""
         return self.filter_for_visualisations[name]
 
