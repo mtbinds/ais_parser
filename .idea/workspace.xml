@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating Project -&gt; Correcting Bugs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ais_parser/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/cli.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -438,7 +437,7 @@
       <workItem from="1619701406335" duration="1171000" />
       <workItem from="1620122013053" duration="641000" />
       <workItem from="1620217228168" duration="4879000" />
-      <workItem from="1620222301045" duration="9210000" />
+      <workItem from="1620222301045" duration="9429000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -461,7 +460,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620297172050</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updating Project -&gt; Correcting Bugs">
+      <created>1620297442312</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1620297442312</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -82,7 +82,7 @@ def main():
         for v in l.get_filterforvisualisations():
             vis_parser = subparsers.add_parser(v, help='Commands for Visualisation ' + v + '')
             vis_subparser = vis_parser.add_subparsers(help=v + ' Visualisation Commands.')
-            for cmd, desc in l.get_filter_for_visualisation_commands(v):
+            for cmd, desc in l.get_filterforvisualisationcommands(v):
                 vis_parser = vis_subparser.add_parser(cmd, help=desc)
                 vis_parser.set_defaults(func=execute_filterforvisualisation, cmd=cmd, vis=v)
 
