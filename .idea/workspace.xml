@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating Project -&gt; Correcting Bugs">
+    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating Project -&gt; Correcting DataBase interaction Bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/repositories/aisdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/repositories/aisdb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/repositories/file.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/repositories/file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/repositories/sql.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/repositories/sql.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AUTHORS.rst" beforeDir="false" afterPath="$PROJECT_DIR$/AUTHORS.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.rst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -441,7 +440,7 @@
       <workItem from="1619701406335" duration="1171000" />
       <workItem from="1620122013053" duration="641000" />
       <workItem from="1620217228168" duration="4879000" />
-      <workItem from="1620222301045" duration="10672000" />
+      <workItem from="1620222301045" duration="11161000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -478,7 +477,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620297822520</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updating Project -&gt; Correcting DataBase interaction Bugs">
+      <created>1620298898427</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1620298898427</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -499,7 +505,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updating Project" />
     <MESSAGE value="Updating Project -&gt; Correcting Bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating Project -&gt; Correcting Bugs" />
+    <MESSAGE value="Updating Project -&gt; Correcting DataBase interaction Bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating Project -&gt; Correcting DataBase interaction Bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

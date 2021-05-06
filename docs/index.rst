@@ -1,27 +1,14 @@
-=========================================
-AIS-PARSER - the Python AIS Tools Environment
-=========================================
+====================================================
+AIS-PARSER - the Python AIS Tools By Madjid Taoualit
+====================================================
 
-AIS-PARSER is a software architecture and suite of algorithms for the analysis of
+AIS-PARSER est une suite d'algorithmes pour l'analyse de données
 `AIS <http://en.wikipedia.org/wiki/Automatic_Identification_System>`_
-data originating from ship-borne transceivers and collected by satellites
-and shore-based receivers.
-The different tools engage in an efficient and modular way,
-hence they are substitutable and extendable in a dynamic fashion.
-The primary goal is to validate and clean the dataset,
-extract information on shipping patterns and shipping routes.
-To make information easily discoverable, the data is stored in a variety of
-database types and formats.
-
-Contents
-========
-
-.. toctree::
-   :maxdepth: 2
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+provenant d'émetteurs-récepteurs embarqués et collectées par satellites
+et récepteurs à terre.
+Les différents outils s'engagent de manière efficace et modulable,
+par conséquent, ils sont substituables et extensibles de manière dynamique.
+L'objectif principal est de valider et de nettoyer l'ensemble de données,
+extraire des informations sur les modes d'expédition et les itinéraires d'expédition.
+Pour rendre les informations facilement identifiables, les données sont stockées dans une variété de
+types et formats de bases de données.
