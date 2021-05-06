@@ -1,12 +1,12 @@
-"""Classes for connection to and management of database tables
+"""Classes de connexion et de gestion des tables de base de données
 
-PgsqlRepository
+Dépôt Pgsql
 ---------------
-Sets up a connection to a ais_parser database repository
+Configure une connexion à un référentiel de base de données ais_parser
 
-Table
+Tableau
 -----
-Used to encapsulate a ais_parser database table
+Utilisé pour encapsuler une table de base de données ais_parser
 
 """
 import logging
@@ -47,7 +47,7 @@ class PgsqlRepository(object):
 
 
 class Table(object):
-    """A database table
+    """Table de base de données
     """
 
     def __init__(self, db, name, cols, indices=None, constraint=None,
@@ -69,7 +69,7 @@ class Table(object):
         return self.name
 
     def create(self):
-        """ Creates tables in the database
+        """ Création d'une table dans la base de données
         """
         with self.db.conn.cursor() as cur:
             logging.info("CREATING " + self.name + " table")
@@ -116,18 +116,18 @@ class Table(object):
             self.db.conn.commit()
 
     def truncate(self):
-        """Delete all data in the table."""
+        """Supprimez toutes les données du tableau."""
         with self.db.conn.cursor() as cur:
             logging.info("Truncating Table " + self.name)
             cur.execute("TRUNCATE TABLE \"" + self.name + "\" CASCADE")
             self.db.conn.commit()
 
     def status(self):
-        """ Returns the approximate number of records in the table
+        """ Renvoie le nombre approximatif d'enregistrements dans la table
 
-        Returns
+        Retourne
         -------
-        integer
+        entier
 
         """
         with self.db.conn.cursor() as cur:
@@ -140,7 +140,7 @@ class Table(object):
                 return -1
 
     def insert_row(self, data):
-        """ Inserts one row into the table
+        """ Insère une ligne dans le tableau
         """
         with self.db.conn.cursor() as cur:
             columnlist = self._get_list_of_columns(data)
@@ -151,42 +151,42 @@ class Table(object):
                         columnlist + " VALUES " + tuplestr, data)
 
     def _get_list_of_columns(self, row):
-        """ Gets a list of the columns from a row dictionary
+        """ Obtient une liste des colonnes d'un dictionnaire de lignes
 
         Arguments
         ---------
-        row : dict
-            A dictionary of (field, value) pairs
+        ligne: dict
+            Un dictionnaire de paires (champ, valeur)
 
-        Returns
+        Retourne
         -------
-        columnslist : str
-            A str of column names in lower case, wrapped in brackets '()'
-
+        liste de colonnes: str
+            Une chaîne de noms de colonnes en minuscules, entre crochets '()'
         """
+
         columnlist = '(' + ','.join([c.lower() for c in row.keys()]) + ')'
         return columnlist
 
     def insert_rows_batch(self, rows):
-        """ Inserts a number of rows into the table
+        """ Insère un certain nombre de lignes dans le tableau
 
         Arguments
         ---------
-        rows : list
-            A list of dicts of (column, value) pairs
+        lignes: liste
+            Une liste de dictionnaires de paires (colonne, valeur)
         """
-        # check there are rows in insert
+        # vérifiez qu'il y a des lignes dans l'insertion
         if len(rows) == 0:
             return
-        # logging.debug("Row to insert: {}".format(rows[0]))
+        # logging.debug("Ligne à insérer: {}". format (lignes [0]))
         with self.db.conn.cursor() as cur:
             columnlist = self._get_list_of_columns(rows[0])
-            # logging.debug("Using columns: {}".format(columnlist))
+            # logging.debug("Utilisation des colonnes: {}". format (liste des colonnes))
             tuplestr = "(" + ",".join("%({})s".format(i)
                                       for i in rows[0]) + ")"
-            # create a single query to insert list of tuples
-            # note that mogrify generates a binary string which we must first
-            # decode to ascii.
+            # créer une seule requête pour insérer une liste de tuples
+            # notez que mogrify génère une chaîne binaire qu'il faut d'abord
+            # décoder en ascii.
             args = ','.join([cur.mogrify(tuplestr, x).decode('utf-8')
                              for x in rows])
             cur.execute("INSERT INTO " + self.name + " " +

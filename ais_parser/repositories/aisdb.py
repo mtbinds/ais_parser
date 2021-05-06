@@ -166,18 +166,17 @@ class AISdb(sql.PgsqlRepository):
                 print("Table {}: Not Yet Created.".format(tb.get_name()))
 
     def create(self):
-        """Create the tables for the AIS data."""
+        """Créez les tables pour les données AIS."""
         for tb in self.tables:
             tb.create()
 
     def truncate(self):
-        """Delete all data in the AIS table."""
+        """Supprimez toutes les données de la table AIS."""
         for tb in self.tables:
             tb.truncate()
 
     def update(self):
-        """Updates (non-destructively) existing tables to new schema
-        """
+        """Met à jour (de manière non destructive) les tables existantes vers un nouveau schéma"""
         for db in [self.clean, self.dirty]:
             table_name = db.get_name()
             sql = """ALTER TABLE {} ALTER COLUMN id SET DATA TYPE BIGINT;""".format(table_name)
@@ -211,20 +210,13 @@ class AISdb(sql.PgsqlRepository):
 
         where = ["imo_number = {}"]
         params = [imo_number]
-        # Amended EOK - no complete_sys_date field in this table
-        # if not from_ts is None:
-        #     where.append("complete_sys_date >= {}")
-        #     params.append(from_ts)
-        # if not to_ts is None:
-        #     where.append("complete_sys_date <= {}")
-        #     params.append(to_ts)
 
         with self.conn.cursor() as cur:
             cur.execute(
                 "select mmsi, first_seen, last_seen from {} where {}".format(imo_list.name, ' AND '.join(where)).format(
                     *params))
             msg_stream = None
-            # get data for each of this ship's mmsi numbers, and concat
+            # obtenir des données pour chacun des numéros mmsi de ce vaisseau, et concat
             for mmsi, first, last in cur:
                 stream = self.get_message_stream(mmsi, from_ts=first, to_ts=last, use_clean_db=use_clean_db,
                                                  as_df=as_df)
@@ -235,8 +227,8 @@ class AISdb(sql.PgsqlRepository):
             return msg_stream
 
     def get_message_stream(self, mmsi, from_ts=None, to_ts=None, use_clean_db=False, as_df=False):
-        """Gets the stream of messages for the given mmsi, ordered by timestamp ascending"""
-        # construct db query
+        """Obtient le flux de messages pour le mmsi donné, triés par horodatage croissant"""
+        # construire une requête de base de données
         if use_clean_db:
             db = self.clean
         else:
@@ -258,7 +250,7 @@ class AISdb(sql.PgsqlRepository):
         if as_df:
             if pd is None:
                 raise RuntimeError("Pandas not Found, Cannot Create Dataframe")
-            # create pandas dataframe
+            # créer un cadre de données pandas
             with self.conn.cursor() as cur:
                 full_sql = cur.mogrify(sql, params).decode('ascii')
             return pd.read_sql(full_sql, self.conn, index_col='complete_sys_date', parse_dates=['complete_sys_date'])
@@ -267,7 +259,7 @@ class AISdb(sql.PgsqlRepository):
             with self.conn.cursor() as cur:
                 cur.execute(sql, params)
                 msg_stream = []
-                # convert tuples from db cursor into dicts
+                # convertir les tuples du curseur db en dicts
                 for row in cur:
                     message = {}
                     for i, col in enumerate(db.cols):
@@ -289,7 +281,7 @@ class AISExtendedTable(sql.Table):
             cur.execute("CREATE EXTENSION IF NOT EXISTS postgis")
         super(AISExtendedTable, self).create()
         with self.db.conn.cursor() as cur:
-            # trigger for GIS location generation
+            # trigger pour la génération de localisation SIG
             try:
                 cur.execute("""CREATE OR REPLACE FUNCTION location_insert() RETURNS trigger AS '
                         BEGIN

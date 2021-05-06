@@ -45,20 +45,21 @@ class FileRepository:
 
     def iterfiles(self):
         """
-        Iterate files in this file repository. Returns a generator of 3-tuples,
-        containing a handle, filename and file extension of the current opened file.
+        Itérer les fichiers dans ce référentiel de fichiers. Renvoie un générateur de 3 tuples,
+        contenant un handle, un nom de fichier et une extension de fichier du fichier actuellement ouvert.
+
         """
         logging.debug("Iterating files in " + self.root)
         failed_files = []
         for root, _, files in os.walk(self.root):
-            # iterate files, filtering only allowed extensions
+            # itérer les fichiers, filtrer uniquement les extensions autorisées
             for filename in files:
                 _, ext = os.path.splitext(filename)
                 if self.allowed_extensions == None or ext in self.allowed_extensions:
-                    # hitting errors with decoding the data, iso-8859-1 seems to sort it
+                    # heurtant des erreurs lors du décodage des données, iso-8859-1 semble les trier
                     with open(os.path.join(root, filename), 'r', encoding='iso-8859-1') as fp:
                         yield (fp, filename, ext)
-                # zip file auto-extract
+                # extraction automatique du fichier zip
                 elif self.unzip and ext == '.zip':
                     try:
                         with zipfile.ZipFile(os.path.join(root, filename), 'r') as z:
@@ -66,13 +67,13 @@ class FileRepository:
                                 _, ext = os.path.splitext(zname)
                                 if self.allowed_extensions == None or ext in self.allowed_extensions:
                                     with z.open(zname, 'r') as fp:
-                                        # zipfile returns a binary file, so we require a
-                                        # TextIOWrapper to decode it
+                                        # zipfile renvoie un fichier binaire, nous avons donc besoin d'un
+                                        # TextIOWrapper pour le décoder
                                         yield (io.TextIOWrapper(fp, encoding='iso-8859-1'), zname, ext)
                     except (zipfile.BadZipFile, RuntimeError) as error:
                         logging.warning("Unable to Extract zip File %s: %s ", filename, error)
                         failed_files.append(filename)
-            # stop after first iteration if not recursive
+            # extraction automatique du fichier zip
             if not self.recursive:
                 break
         if len(failed_files) > 0:
