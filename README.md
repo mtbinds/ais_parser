@@ -1,7 +1,7 @@
 ## AIS_PARSER &mdash; l'environnement d'outils Python pour l'analyse/le traçage des données AIS.
 
 
-AIS-PARSER est une suite d'algorithmes pour l'analyse de données
+AIS_PARSER est une suite d'algorithmes pour l'analyse de données
 `AIS <http://en.wikipedia.org/wiki/Automatic_Identification_System>`_
 provenant d'émetteurs-récepteurs embarqués et collectées par satellites
 et récepteurs à terre.

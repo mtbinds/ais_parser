@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating Author ID's">
+    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="README Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.rst" afterDir="false" />
@@ -440,7 +440,7 @@
       <workItem from="1619701406335" duration="1171000" />
       <workItem from="1620122013053" duration="641000" />
       <workItem from="1620217228168" duration="4879000" />
-      <workItem from="1620222301045" duration="11693000" />
+      <workItem from="1620222301045" duration="11759000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -491,7 +491,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620299389537</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="README Update">
+      <created>1620299906935</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1620299906935</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -514,7 +521,8 @@
     <MESSAGE value="Updating Project -&gt; Correcting Bugs" />
     <MESSAGE value="Updating Project -&gt; Correcting DataBase interaction Bugs" />
     <MESSAGE value="Updating Author ID's" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating Author ID's" />
+    <MESSAGE value="README Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="README Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
