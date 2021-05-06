@@ -1,6 +1,6 @@
-====================================================
-AIS-PARSER - the Python AIS Tools By Madjid Taoualit
-====================================================
+=======================================================================================
+AIS_PARSER - l'environnement d'outils Python pour l'analyse/le traçage des données AIS.
+=======================================================================================
 
 AIS-PARSER est une suite d'algorithmes pour l'analyse de données
 `AIS <http://en.wikipedia.org/wiki/Automatic_Identification_System>`_
