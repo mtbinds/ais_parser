@@ -40,13 +40,13 @@ def main():
             print("\t" + filter_for_visualisation)
 
 
-    def execute_repo_command(args):
-        l.execute_repository_command(args.repo, args.cmd)
+    def execute_repocommand(args):
+        l.execute_repositorycommand(args.repo, args.cmd)
 
     def execute_program(args):
         l.execute_programcommand(args.prog, args.cmd)
 
-    def execute_filter_for_visualisation(args):
+    def execute_filterforvisualisation(args):
         l.execute_filterforvisualisationcommand(args.vis, args.cmd)
 
 
@@ -70,7 +70,7 @@ def main():
             repo_subparser = repo_parser.add_subparsers(help=r + ' Repository Commands.')
             for cmd, desc in l.get_repositorycommands(r):
                 cmd_parser = repo_subparser.add_parser(cmd, help=desc)
-                cmd_parser.set_defaults(func=execute_repo_command, cmd=cmd, repo=r)
+                cmd_parser.set_defaults(func=execute_repocommand, cmd=cmd, repo=r)
 
         for a in l.get_programs():
             prog_parser = subparsers.add_parser(a, help='Commands for Program ' + a + '')
@@ -84,7 +84,7 @@ def main():
             vis_subparser = vis_parser.add_subparsers(help=v + ' Visualisation Commands.')
             for cmd, desc in l.get_filter_for_visualisation_commands(v):
                 vis_parser = vis_subparser.add_parser(cmd, help=desc)
-                vis_parser.set_defaults(func=execute_filter_for_visualisation, cmd=cmd, vis=v)
+                vis_parser.set_defaults(func=execute_filterforvisualisation, cmd=cmd, vis=v)
 
 
     args = parser.parse_args()
