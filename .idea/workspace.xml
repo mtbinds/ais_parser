@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating Project">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser.conf" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/config_setter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/config_setter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/.ipynb_checkpoints/AIS_demo_data-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/.ipynb_checkpoints/AIS_demo_data-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/AIS_demo_data.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/AIS_demo_data.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" afterDir="false" />
-    </list>
+    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating Project -&gt; Correcting Bugs" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -443,7 +435,7 @@
       <workItem from="1619701406335" duration="1171000" />
       <workItem from="1620122013053" duration="641000" />
       <workItem from="1620217228168" duration="4879000" />
-      <workItem from="1620222301045" duration="8398000" />
+      <workItem from="1620222301045" duration="8783000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -452,7 +444,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620226039963</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Updating Project -&gt; Correcting Bugs">
+      <created>1620296697622</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1620296697622</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +471,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updating Project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating Project" />
+    <MESSAGE value="Updating Project -&gt; Correcting Bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating Project -&gt; Correcting Bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
