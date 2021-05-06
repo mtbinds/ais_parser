@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="README Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/programs/aisparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/aisparser.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -439,7 +439,7 @@
       <workItem from="1619701406335" duration="1171000" />
       <workItem from="1620122013053" duration="641000" />
       <workItem from="1620217228168" duration="4879000" />
-      <workItem from="1620222301045" duration="11958000" />
+      <workItem from="1620222301045" duration="17485000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -504,7 +504,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620299964623</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="README Update">
+      <created>1620300177018</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1620300177018</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

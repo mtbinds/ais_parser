@@ -202,11 +202,11 @@ def run(inp, out, dropindices=True, source=0):
         while True:
             msgs = [q.get()]
             while not q.empty():
+
                 msgs.append(q.get(timeout=0.5))
 
             n = len(msgs)
             if n > 0:
-                # logging.debug("Inserting {} rows into {}".format(n, table.name))
                 try:
                     table.insert_rows_batch(msgs)
                 except Exception as e:
