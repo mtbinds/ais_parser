@@ -43,13 +43,6 @@ def gen_default_config(*args):
     default_config.set('baddata', 'type', 'file')
     default_config.set('baddata', 'path', baddata_directory)
 
-    gooddata_directory = os.path.join(os.getcwd(), 'gooddata')
-    if not os.path.exists(gooddata_directory):
-        os.mkdir(gooddata_directory)
-    default_config.add_section('gooddata')
-    default_config.set('gooddata', 'type', 'file')
-    default_config.set('gooddata', 'path', gooddata_directory)
-
     default_config.add_section('aisdb')
     default_config.set('aisdb', 'type', 'aisdb')
     default_config.set('aisdb', 'host', 'localhost')
