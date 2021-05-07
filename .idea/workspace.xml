@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating requirements.txt (Python version = 38)">
+    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating requirements.txt (Python version = 3.8)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/tools/resampler.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/tools/resampler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/cli.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -446,7 +443,8 @@
       <workItem from="1620222301045" duration="18650000" />
       <workItem from="1620322842877" duration="656000" />
       <workItem from="1620323576052" duration="3133000" />
-      <workItem from="1620374244783" duration="1285000" />
+      <workItem from="1620374244783" duration="2155000" />
+      <workItem from="1620376582076" duration="3002000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -525,7 +523,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620315236215</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Updating requirements.txt (Python version = 3.8)">
+      <created>1620375824385</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1620375824386</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,14 +555,15 @@
     <MESSAGE value="Updating Author ID's" />
     <MESSAGE value="README Update" />
     <MESSAGE value="Updating requirements.txt (Python version = 38)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating requirements.txt (Python version = 38)" />
+    <MESSAGE value="Updating requirements.txt (Python version = 3.8)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating requirements.txt (Python version = 3.8)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ais_parser/cli.py</url>
-          <line>59</line>
+          <line>62</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

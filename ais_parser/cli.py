@@ -21,9 +21,12 @@ def main():
         logger.debug(configfilepath)
         l = loader.Loader(config)
     else:
-        logger.warn("Le fichier de configuration attendu 'ais_parser.conf' n'est pas présent dans ce dossier. "
-                    "Veuillez vous déplacer vers le bon dossier ou exécuter set_default pour initialiser"
-                    "Le répertoire actuel.")
+
+        logger.warn("The expected configuration file 'ais_parser.conf' is not present in this folder. "
+                    "Please move to the correct directory or run set_default to initialize"
+                    "The current directory.")
+
+        logger.warn("The Command (ais_parser set_default) should be executed in the inner directory(../ais_parser/ais_parser/...) ! .")
         # return
 
     def list_components(args):
