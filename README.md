@@ -56,7 +56,7 @@ types et formats de bases de données.
 * Cela va générer un fichier de configuration (ais_parser.conf), Vous devez éditer la section (ais_db) en metant vos paramètres de connexion, sachant qu'il faut garder le même nom de la base de donnée (test_aisdb) au moment de création, vu que ce nom est utilisé dans le programme, si vous souhaitez en modifier le nom rendez-vous dans le répertoire (repositories).
 * Il faut savoir aussi qu'il faut mettre le même nom d'utilisateur dans (user & ro_user), aussi le même mot de passe dans (pass & ro_pass).
 
-[Screenshot](img/Screen Shot 2021-05-07 at 12.47.56.png)
+![alt text](img/Screen Shot 2021-05-07 at 12.47.56.png)
 
 
 
