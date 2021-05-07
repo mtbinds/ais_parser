@@ -4,28 +4,7 @@ import pandas as pd
 
 def convert_messages_to_hourly_bins(df, period='H', fillnans=False,
                                     run_resample=True):
-    """Resample the messages to a new time-resolution.
 
-    Defaults to hourly.
-
-    Arguments
-    ---------
-    df : pandas DataFrame
-        A DataFrame of messages
-    period : string, optional
-        Indicates the period to resample over
-    fillnans : bool, optional
-        Defaults to False
-    run_resample : bool, optional
-        Defaults to True
-
-    Notes
-    -----
-    Intended for use with the extended database
-
-    Called internally, one of the wrapper functions should be called
-
-    """
     if df.empty:
         return df
 
@@ -43,15 +22,15 @@ def convert_messages_to_hourly_bins(df, period='H', fillnans=False,
     else:
         df_new = []
 
-    # set the time equal to the index
+    # définir le temps égal à l'index
     df_new['sys_date_time'] = df_new.index.values
-    # fill forward
+    # remplir en avant
     if fillnans:
-        # forward fill first
+        # remplir en avant en premier
         df_new = df_new.fillna(method='pad')
-        # now backward fill for remain
+        # maintenant remplir en arrière pour rester
         df_new = df_new.fillna(method='bfill')
     else:
-        # remove all entries where there are nans in speed
+        # supprimer toutes les entrées où il y a des nans de vitesse
         df_new = df_new.ix[pd.isnull(df_new.sog) == False]
     return df_new
