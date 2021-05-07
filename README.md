@@ -84,7 +84,7 @@ types et formats de bases de données.
   
   |           TERMINAL                      |                         
   |:---------------------------------------:|
-  |  ais_parser aisdb update                |
+  |  ais_parser aisdb truncate                |
 
 
 
