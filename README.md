@@ -56,7 +56,38 @@ types et formats de bases de données.
 * Cela va générer un fichier de configuration (ais_parser.conf), Vous devez éditer la section (ais_db) en metant vos paramètres de connexion, sachant qu'il faut garder le même nom de la base de donnée (test_aisdb) au moment de création, vu que ce nom est utilisé dans le programme, si vous souhaitez en modifier le nom rendez-vous dans le répertoire (repositories).
 * Il faut savoir aussi qu'il faut mettre le même nom d'utilisateur dans (user & ro_user), aussi le même mot de passe dans (pass & ro_pass).
 
-![alt text](img/Screen Shot 2021-05-07 at 12.47.56.png)
+#### Configuration des paramètres (manipulations de la base de données):
+
+* Création de la base de données avec toutes les tables nécessaires:
+
+  |           nom de table                  |  rôle    |                     
+  |:---------------------------------------:|:--------:|
+  |  ais_clean              | Les messages filtrés satisfaisants les exigences de fichiers (utils.py)|
+  |  ais_dirty              | Les messages filtrés ne satisfaisants pas les exigences de fichiers (utils.py)|
+  |  imolist                | La liste des tuples (IMO,MMSI) qui représentes l'immatriculation des navires|
+  |  imolist_clean          | La liste des tuples (IMO,MMSI) satisfaisant les exigences de fichier (utils.py)|
+  |  ais_extended          | Un sous-ensemble de navires (navires propres)|
+  |  ais_sources        | Liste des noms des fichiers AIS (.csv)|
+        
+
+
+
+  |           TERMINAL                      |                         
+  |:---------------------------------------:|
+  |  ais_parser aisdb create                |
+
+* Mise à jour de la base de données:
+  
+  |           TERMINAL                      |                         
+  |:---------------------------------------:|
+  |  ais_parser aisdb update                |
+
+* Supression des données des tables de la base de données:
+  
+  |           TERMINAL                      |                         
+  |:---------------------------------------:|
+  |  ais_parser aisdb update                |
+
 
 
 
