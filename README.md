@@ -68,9 +68,7 @@ types et formats de bases de données.
   |  imolist_clean          | La liste des tuples (IMO,MMSI) satisfaisant les exigences de fichier (utils.py)|
   |  ais_extended          | Un sous-ensemble de navires (navires propres)|
   |  ais_sources        | Liste des noms des fichiers AIS (.csv)|
-        
-
-
+  |  action_log | Le journal des opération du programme |
 
   |           TERMINAL                      |                         
   |:---------------------------------------:|
@@ -95,12 +93,22 @@ types et formats de bases de données.
 
 * Ajoutez tous vos fichiers AIS (.csv ou .xml) dans le répertoire (aiscsv)
 * Une fois dans le répertoire principal (ais_parser):
+ 
+  |           TERMINAL                      |                         
+  |:---------------------------------------:|
+  |  ais_parser -h                 
 
-    TERMINAL:
+* Les commandes les plus importantes:
+
+  |           Commande                      |                          rôle                              |
+  |:---------------------------------------:|:----------------------------------------------------------:|
+  | ais_parser aisparser run | simplifie les fichiers (.csv) et les met dans la base de données (Tables ais_clean et ais_dirty) et les messages erronés les exporte et les écrit sous forme de (export.csv) dans le répertoire (baddata)|
+  | ais_parser imolist run | permet d'extraire les tuples (MMSI,IMO) et les insérer dans la base de données (Tables imo_list et clean_imolist)|
+  | ais_parser shipsimporter run | permet d'enregistrer un sous ensemble propre de navires dans la table (ais_extended)| 
+  | ais_parser processplotter run | permet de simplifier les données AIS et en faire des données pour la représentation des trajectoires sur une carte géographique en utilisant Jupyter Notebook| 
     
-    ais_parser -h
-    
-    
+* Le fichier (Jupyter Notebook) à exécuter pour la représentation se trouve dans (./filter_for_visualisations/AIS_demo_data.ipynb)
+
 ### Informations complémentaires:
 
 Pour plus d'informations, veuillez contacter (madjid.taoualit@etu.univ-lehavre.fr)
