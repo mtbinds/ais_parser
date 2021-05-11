@@ -36,7 +36,7 @@ types et formats de bases de données.
   |:---------------------------------------:|:----------------------------------------------------------:|
   | pip install -r requirements.txt         | conda create --name nom_environment --file requirements.txt|
                                  
-#### Installation de l'environnement Python:
+#### Installation de programme:
 
 * Une fois dans le répertoire principal (ais_parser):
 * Vous devez être connecté à internet.
@@ -44,6 +44,14 @@ types et formats de bases de données.
   |           TERMINAL                      |                         
   |:---------------------------------------:|
   |  Python setup.py install                |
+
+#### Désinstallation de programme:
+
+* Une fois dans le répertoire principal (ais_parser):
+
+  |           TERMINAL                      |                         
+  |:---------------------------------------:|
+  |  pip uninstall ais_parser               |
                                  
 --> N'oublier pas de configurer l'interpreter Python si vous êtes sous PyCharm 
     
