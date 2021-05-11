@@ -45,7 +45,7 @@ types et formats de bases de données.
   |:---------------------------------------:|
   |  Python setup.py install                |
 
-#### Désinstallation de programme:
+### Désinstallation de programme:
 
 * Une fois dans le répertoire principal (ais_parser):
 
