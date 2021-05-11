@@ -68,7 +68,7 @@ types et formats de bases de données.
   |  imolist_clean          | La liste des tuples (IMO,MMSI) satisfaisant les exigences de fichier (utils.py)|
   |  ais_extended          | Un sous-ensemble de navires (navires propres)|
   |  ais_sources        | Liste des noms des fichiers AIS (.csv)|
-  |  action_log | Le journal des opération du programme |
+  |  action_log | Le journal des opérations du programme |
 
   |           TERMINAL                      |                         
   |:---------------------------------------:|
