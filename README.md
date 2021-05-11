@@ -30,6 +30,7 @@ types et formats de bases de données.
 #### Installation de l'environnement Python:
 
 * Une fois dans le répertoire principal (ais_parser):
+* Vous devez être connecté à internet.
 
   |           Environement Python           |                          Anaconda                          |
   |:---------------------------------------:|:----------------------------------------------------------:|
@@ -38,6 +39,7 @@ types et formats de bases de données.
 #### Installation de l'environnement Python:
 
 * Une fois dans le répertoire principal (ais_parser):
+* Vous devez être connecté à internet.
 
   |           TERMINAL                      |                         
   |:---------------------------------------:|

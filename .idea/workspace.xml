@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating environment.yml">
-      <change beforePath="$PROJECT_DIR$/.idea/ais_parser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ais_parser.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating Project -&gt; Fixing Bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -453,7 +449,7 @@
       <workItem from="1620729306485" duration="3029000" />
       <workItem from="1620732819730" duration="843000" />
       <workItem from="1620733806881" duration="555000" />
-      <workItem from="1620734417484" duration="98000" />
+      <workItem from="1620734417484" duration="727000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -581,7 +577,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620390061066</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Updating Project -&gt; Fixing Bugs">
+      <created>1620734541853</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1620734541853</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,7 +613,8 @@
     <MESSAGE value="Updating requirements.txt (Python version = 3.8) &amp; Updating cli.py warnings to make the installation easier" />
     <MESSAGE value="Updating README.md" />
     <MESSAGE value="Updating environment.yml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating environment.yml" />
+    <MESSAGE value="Updating Project -&gt; Fixing Bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating Project -&gt; Fixing Bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
