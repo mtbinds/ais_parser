@@ -221,7 +221,7 @@ def insert_message_stream(aisdb, interval, msg_stream):
 
     artificial = interpolatepassages(valid)
 
-    aisdb.extended.insert_rows_batch(valid + list(artificial))
+    aisdb.extended.insert_rowsbatch(valid + list(artificial))
 
     # mark the work we've done
     aisdb.action_log.insert_row({'action': "import",

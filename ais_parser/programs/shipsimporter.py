@@ -185,7 +185,7 @@ def insert_messagestream(aisdb, interval, msg_stream):
 
         else:
 
-            invalid.insert(j, msg_stream.get[k])
+            invalid.insert(j, msg_stream[k])
             j = j + 1
             k = k+1
 

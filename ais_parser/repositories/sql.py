@@ -167,7 +167,7 @@ class Table(object):
         columnlist = '(' + ','.join([c.lower() for c in row.keys()]) + ')'
         return columnlist
 
-    def insert_rows_batch(self, rows):
+    def insert_rowsbatch(self, rows):
         """ Insère un certain nombre de lignes dans le tableau
 
         Arguments

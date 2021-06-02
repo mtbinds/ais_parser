@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating README">
+      <change beforePath="$PROJECT_DIR$/.idea/ais_parser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ais_parser.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/programs/aisparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/aisparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/programs/shipsimporter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/shipsimporter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/repositories/sql.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/repositories/sql.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/tools/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +37,6 @@
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -49,20 +53,21 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ais_parser/aiscsv" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ais_parser/aiscsv" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/img" />
       <recent name="$PROJECT_DIR$/docs" />
       <recent name="$PROJECT_DIR$/ais_parser" />
-      <recent name="$PROJECT_DIR$/ais_parser/tools" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -449,7 +454,14 @@
       <workItem from="1620729306485" duration="3029000" />
       <workItem from="1620732819730" duration="843000" />
       <workItem from="1620733806881" duration="555000" />
-      <workItem from="1620734417484" duration="1275000" />
+      <workItem from="1620734417484" duration="1572000" />
+      <workItem from="1620812911900" duration="640000" />
+      <workItem from="1620815047094" duration="3006000" />
+      <workItem from="1620818758645" duration="790000" />
+      <workItem from="1620821705977" duration="1139000" />
+      <workItem from="1621953185151" duration="466000" />
+      <workItem from="1622541104165" duration="8451000" />
+      <workItem from="1622644607174" duration="2642000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -605,7 +617,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620736434408</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Updating README">
+      <created>1620736907889</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1620736907889</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

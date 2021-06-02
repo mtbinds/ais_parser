@@ -208,7 +208,7 @@ def run(inp, out, dropindices=True, source=0):
             n = len(msgs)
             if n > 0:
                 try:
-                    table.insert_rows_batch(msgs)
+                    table.insert_rowsbatch(msgs)
                 except Exception as e:
                     logging.warning("Error Executing Query: " + repr(e))
             # marquer cette tâche comme terminée
