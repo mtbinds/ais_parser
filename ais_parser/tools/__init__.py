@@ -1,6 +1,4 @@
-""" Extracts a subset of clean ships into ais_extended tables
 
-"""
 import logging
 import time
 import threading
@@ -94,11 +92,7 @@ def filter_good_ships(aisdb):
 
 
 def cluster_table(aisdb, table):
-    """Performs a clustering of the postgresql table on the MMSI index.
 
-    This process significantly improves the runtime of extended table generation.
-
-    """
     with aisdb.conn.cursor() as cur:
         index_name = table.name.lower() + "_mmsi_idx"
         logging.info("Clustering Table %s on Index %s. This May Take a While...",
@@ -170,9 +164,7 @@ def process_interval_series(aisdb, interval):
 
 
 def insert_message_stream(aisdb, interval, msg_stream):
-    """Takes a stream of messages for an MMSI over an interval, runs it through
-    outlier detection and interpolation programs, then inserts the resulting
-    stream into the ais_extended table."""
+
     mmsi, imo_number, start, end = interval
 
     valid = []

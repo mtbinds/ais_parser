@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/AIS_demo_data.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/AIS_demo_data.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/repositories/file.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/repositories/file.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ais_parser/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/tools/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -462,6 +458,7 @@
       <workItem from="1622541104165" duration="8451000" />
       <workItem from="1622644607174" duration="3149000" />
       <workItem from="1622664751464" duration="25576000" />
+      <workItem from="1622756045115" duration="137000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
