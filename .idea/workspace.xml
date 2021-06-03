@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating README">
-      <change beforePath="$PROJECT_DIR$/.idea/ais_parser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ais_parser.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f0aff707-ee49-4106-8e2e-626e882eb3d4" name="Default Changelist" comment="Updating">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/programs/aisparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/aisparser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/programs/shipsimporter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/programs/shipsimporter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ais_parser/repositories/sql.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/repositories/sql.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/AIS_demo_data.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/AIS_demo_data.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/filter_for_visualisations/processplotter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ais_parser/repositories/file.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/repositories/file.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ais_parser/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ais_parser/tools/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -461,7 +460,8 @@
       <workItem from="1620821705977" duration="1139000" />
       <workItem from="1621953185151" duration="466000" />
       <workItem from="1622541104165" duration="8451000" />
-      <workItem from="1622644607174" duration="2642000" />
+      <workItem from="1622644607174" duration="3149000" />
+      <workItem from="1622664751464" duration="25576000" />
     </task>
     <task id="LOCAL-00001" summary="Updating Project">
       <created>1620226039960</created>
@@ -624,7 +624,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620736907889</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Updating">
+      <created>1622648505923</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1622648505924</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,7 +662,8 @@
     <MESSAGE value="Updating environment.yml" />
     <MESSAGE value="Updating Project -&gt; Fixing Bugs" />
     <MESSAGE value="Updating README" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating README" />
+    <MESSAGE value="Updating" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

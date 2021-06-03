@@ -98,7 +98,7 @@ class Loader:
 
 
     def get_datarepositories(self):
-        """Renvoie un ensemble de noms de répertoiress de données disponibles"""
+        """Renvoie un ensemble de noms de répertoires de données disponibles"""
         return self.repo_config.keys()
 
     def get_repositorycommands(self, repo_name):

@@ -852,7 +852,7 @@ def get_action_interp_reg(row, options, grid_params):
         grid_params (dict): Les paramètres de grille spécifiés dans le `` config_file ''.
 
     Retour:
-        dict: triplets state-action-state qui interpolent entre `` prev_state '' et `` cur_state ''.
+        dict: triplets état-action-état qui interpolent entre `` prev_state '' et `` cur_state ''.
     """
     # récupère les données de transition
     traj_num = row["ID"].astype(int)

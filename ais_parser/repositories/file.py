@@ -46,7 +46,7 @@ class FileRepository:
     def iterfiles(self):
         """
         Itérer les fichiers dans ce référentiel de fichiers. Renvoie un générateur de 3 tuples,
-        contenant un handle, un nom de fichier et une extension de fichier du fichier actuellement ouvert.
+        contenant un manipulateur, un nom de fichier et une extension de fichier du fichier actuellement ouvert.
 
         """
         logging.debug("Iterating files in " + self.root)

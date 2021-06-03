@@ -41,28 +41,6 @@ def run(inp, out, n_threads=2, dropindices=False):
 
 
 def filter_good_ships(aisdb):
-    """Generate a set of imo numbers and (mmsi, imo_number) validity intervals
-
-    Generate a set of imo numbers and (mmsi, imo_number) validity intervals
-    for ships which are deemed to be 'clean'. A clean ship is defined as one which:
-
-     * Has valid MMSI numbers associated with it.
-     * For each MMSI number, the period of time it is associated with this IMO_Number
-       (via message number 5) overlaps with the period the MMSI number was in use.
-     * For each MMSI number, its usage period does not overlap with that of any
-       other of this ship's MMSI numbers.
-     * That none of these MMSI numbers have been used by another ship (i.e.
-       another IMO_Number is also associated with this MMSI)
-
-    Returns
-    =======
-    valid_imos :
-        A set of valid imo_number numbers
-    imo_mmsi_intervals :
-        A list of (mmsi, imo_number, start, end) tuples, describing the validity
-        intervals of each (mmsi, imo_number) pair
-
-    """
 
     with aisdb.conn.cursor() as cur:
         cur.execute("SELECT distinct imo_number from {}".format(aisdb.imolist.get_name()))
